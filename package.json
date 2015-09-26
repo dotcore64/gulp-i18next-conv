@@ -1,0 +1,31 @@
+{
+  "name": "gulp-i18next-conv",
+  "version": "0.0.1",
+  "description": "Gulp plugin to convert gettext .po or .mo files to i18next compatible JSON",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/perrin4869/gulp-i18next-conv.git"
+  },
+  "keywords": [
+    "gulp",
+    "i18next",
+    "gettext",
+    "json"
+  ],
+  "author": "Julian Grinblat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/perrin4869/gulp-i18next-conv/issues"
+  },
+  "homepage": "https://github.com/perrin4869/gulp-i18next-conv#readme",
+  "dependencies": {
+    "bluebird": "^2.10.1",
+    "gulp-util": "^3.0.6",
+    "i18next-conv": "^0.1.5",
+    "through2": "^2.0.0"
+  }
+}
