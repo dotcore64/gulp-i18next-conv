@@ -29,6 +29,7 @@ function gulpGettextConv(determineDomain) {
 			} else if(file.isStream()) {
 				// start the transformation
 				file.contents.write(data);
+				file.contents.end();
 			}
 
 			var dirname = path.dirname(file.path);
