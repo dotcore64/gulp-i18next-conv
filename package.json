@@ -23,15 +23,15 @@
   },
   "homepage": "https://github.com/perrin4869/gulp-i18next-conv#readme",
   "dependencies": {
-    "bluebird": "^2.10.1",
-    "gulp-util": "^3.0.6",
-    "i18next-conv": "^0.1.5",
+    "bluebird": "^3.0.5",
+    "gulp-util": "^3.0.7",
+    "i18next-conv": "^0.1.8",
     "through2": "^2.0.0"
   },
   "devDependencies": {
-    "chai": "^3.3.0",
-    "event-stream": "^3.3.1",
-    "mocha": "^2.3.3",
-    "vinyl": "^1.0.0"
+    "chai": "^3.4.1",
+    "event-stream": "^3.3.2",
+    "mocha": "^2.3.4",
+    "vinyl": "^1.1.0"
   }
 }
