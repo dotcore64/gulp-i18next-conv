@@ -1,4 +1,4 @@
-var BluePromise = require('bluebird');
+var Promise = require('bluebird');
 
 var through = require('through2'),
 	gutil   = require('gulp-util'),
@@ -10,7 +10,7 @@ var PluginError = gutil.PluginError;
 // consts
 const PLUGIN_NAME = 'gulp-i18next-conv';
 
-conv.gettextToI18nextDataAsync = BluePromise.promisify(conv.gettextToI18nextData);
+conv.gettextToI18nextDataAsync = Promise.promisify(conv.gettextToI18nextData);
 
 // plugin level function (dealing with files)
 function gulpGettextConv(determineDomain) {
@@ -41,7 +41,7 @@ function gulpGettextConv(determineDomain) {
 		.catch(function(err) {
 			throw new PluginError(PLUGIN_NAME, err.message);
 		})
-		.nodeify(cb);
+		.asCallback(cb);
 	});
 
 	// returning the file stream
