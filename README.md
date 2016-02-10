@@ -1,5 +1,8 @@
 # gulp-i18next-conv
 
+[![Travis][build-badge]][build]
+[![npm package][npm-badge]][npm]
+
 > Convert po files into i18next compatible json files
 
 ## Install
@@ -48,3 +51,9 @@ Function that can be used to specify what part of the input path is the locale. 
 ## License
 
 See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
+
+[build-badge]: https://img.shields.io/travis/perrin4869/gulp-i18next-conv/master.svg?style=flat-square
+[build]: https://travis-ci.org/perrin4869/gulp-i18next-conv
+
+[npm-badge]: https://img.shields.io/npm/v/gulp-i18next-conv.svg?style=flat-square
+[npm]: https://www.npmjs.org/package/gulp-i18next-gulp
