@@ -13,16 +13,17 @@ const PLUGIN_NAME = 'gulp-i18next-conv';
 conv.gettextToI18nextDataAsync = Promise.promisify(conv.gettextToI18nextData);
 
 // plugin level function (dealing with files)
-function gulpGettextConv(determineDomain) {
+function gulpGettextConv(determineDomain, options) {
 	determineDomain = determineDomain || function(filename) {
 		return filename.match(/^\/?([^\/]+)\//)[1];
 	};
+	options = options || {};
 
 	// creating a stream through which each file will pass
 	var stream = through.obj(function(file, enc, cb) {
 		var self = this;
 		
-		conv.gettextToI18nextDataAsync(determineDomain(file.relative), file.path)
+		conv.gettextToI18nextDataAsync(determineDomain(file.relative), file.path, options)
 	    .then(function(data) {
 			if (file.isBuffer()) {
 				file.contents = new Buffer(data);
