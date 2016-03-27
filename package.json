@@ -14,6 +14,7 @@
   },
   "keywords": [
     "gulp",
+    "gulpplugin",
     "i18next",
     "gettext",
     "json"
