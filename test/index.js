@@ -5,7 +5,7 @@ var chai = require('chai'),
 	path = require('path'),
 	es   = require('event-stream');
 
-var i18next = require('../');
+var i18next = require('../lib');
 
 chai.should();
 
