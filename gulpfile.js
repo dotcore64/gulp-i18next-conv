@@ -8,7 +8,7 @@ gulp.task('lint', () =>
   .pipe(eslint.format())
 );
 
-gulp.task('build', () => (
+gulp.task('build', ['lint'], () => (
   gulp.src('lib/index.js')
   .pipe(babel())
   .pipe(gulp.dest('dist'))
