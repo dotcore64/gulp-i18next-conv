@@ -1,69 +1,65 @@
-var File   = require('vinyl'),
-	PassThrough = require('stream').PassThrough;
+const File = require('vinyl');
+const PassThrough = require('stream').PassThrough;
 
-var chai = require('chai'),
-	path = require('path'),
-	es   = require('event-stream');
+const chai = require('chai');
+const path = require('path');
+const es = require('event-stream');
 
-var i18next = require('../lib');
+const i18next = require('../dist');
 
 chai.should();
 
-describe('gulp-i18next-conv', function() {
-	describe('in streaming mode', function() {
+describe('gulp-i18next-conv', () => {
+  describe('in streaming mode', () => {
+    it('should convert given po file', done => {
+      // create the fake file
+      const poFile = new File({
+        path: 'test/messages.po',
+        contents: new PassThrough(),
+      });
 
-		it('should convert given po file', function(done) {
-			// create the fake file
-			var poFile = new File({
-				path: 'test/messages.po',
-				contents: new PassThrough()
-			});
+      // Create a prefixer plugin stream
+      const converter = i18next(() => 'en');
+      converter.write(poFile);
 
-			// Create a prefixer plugin stream
-			var converter = i18next(function() { return 'en'; });
-			converter.write(poFile);
+      // wait for the file to come back out
+      converter.once('data', file => {
+        // make sure it came out the same way it went in
+        file.isStream().should.equal(true);
+        path.basename(file.path).should.equal('messages.json');
 
-			// wait for the file to come back out
-			converter.once('data', function(file) {
-				// make sure it came out the same way it went in
-				file.isStream().should.equal(true);
-				path.basename(file.path).should.equal('messages.json');
+        // buffer the contents to make sure it got prepended to
+        file.contents.pipe(es.wait((err, data) => {
+          // check the contents
+          data.toString().should.equal('{\n    "foo": "bar"\n}');
+          done();
+        }));
+      });
+    });
+  });
 
-				// buffer the contents to make sure it got prepended to
-				file.contents.pipe(es.wait(function(err, data) {
-					// check the contents
-					data.toString().should.equal('{\n    "foo": "bar"\n}');
-					done();
-				}));
-			});
-		});
+  describe('in buffering mode', () => {
+    it('should convert given po file', done => {
+      // create the fake file
+      const poFile = new File({
+        path: 'test/messages.po',
+        contents: new Buffer(''),
+      });
 
-	});
+      // Create a prefixer plugin stream
+      const converter = i18next(() => 'en');
+      converter.write(poFile);
 
-	describe('in buffering mode', function() {
+      // wait for the file to come back out
+      converter.once('data', file => {
+        // make sure it came out the same way it went in
+        file.isBuffer().should.equal(true);
+        path.basename(file.path).should.equal('messages.json');
 
-		it('should convert given po file', function(done) {
-			// create the fake file
-			var poFile = new File({
-				path: 'test/messages.po',
-				contents: new Buffer("")
-			});
-
-			// Create a prefixer plugin stream
-			var converter = i18next(function() { return 'en'; });
-			converter.write(poFile);
-
-			// wait for the file to come back out
-			converter.once('data', function(file) {
-				// make sure it came out the same way it went in
-				file.isBuffer().should.equal(true);
-				path.basename(file.path).should.equal('messages.json');
-
-				// buffer the contents to make sure it got prepended to
-				file.contents.toString().should.equal('{\n    "foo": "bar"\n}');
-				done();
-			});
-		});
-
-	});
+        // buffer the contents to make sure it got prepended to
+        file.contents.toString().should.equal('{\n    "foo": "bar"\n}');
+        done();
+      });
+    });
+  });
 });
