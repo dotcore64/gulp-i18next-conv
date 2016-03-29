@@ -4,7 +4,7 @@
     "node": true,
     "mocha": true
   },
-  "rules": [
+  "rules": {
     "func-names": 0 // Needed for this binding
-  ]
+  }
 }
