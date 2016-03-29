@@ -17,16 +17,16 @@ $ npm install --save-dev gulp-i18next-conv
 If for example you have the following po files: `locale/en/LC_MESSAGES/message.po` and `locale/jp/LC_MESSAGES/messages.po`, then you can produce `locale/en/messages.json` and `locale/jp/messages.json` with the following task:
 
 ```js
-var gulp    = require('gulp'),
-	i18next = require('gulp-i18next-conv');
+const gulp = require('gulp');
+const i18next = require('gulp-i18next-conv');
 
 gulp.task('locale-build', function() {
-	// Backend locales
-	return gulp.src('locale/*/LC_MESSAGES/*.po')
-	.pipe(i18next())
-	.pipe(jsonminify())
-	.pipe(rename(path => path.dirname = path.dirname.replace('/LC_MESSAGES', '')))
-	.pipe(gulp.dest('locale'));
+  // Backend locales
+  return gulp.src('locale/*/LC_MESSAGES/*.po')
+  .pipe(i18next())
+  .pipe(jsonminify())
+  .pipe(rename(path => path.dirname = path.dirname.replace('/LC_MESSAGES', '')))
+  .pipe(gulp.dest('locale'));
 });
 ```
 
@@ -42,7 +42,7 @@ Type: `function` optional, default:
 
 ```js
 function(filename) {
-	return filename.match(/^\/?([^\/]+)\//)[1];
+  return filename.match(/^\/?([^\/]+)\//)[1];
 };
 ```
 
