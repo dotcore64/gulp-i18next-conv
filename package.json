@@ -41,6 +41,8 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^2.0.0",
+    "gulp-mocha": "^2.2.0",
+    "gulp-util": "^3.0.7",
     "mocha": "^2.3.4",
     "vinyl": "^1.1.0"
   }

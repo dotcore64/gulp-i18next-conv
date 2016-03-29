@@ -1,5 +1,7 @@
 const gulp = require('gulp');
+const util = require('gulp-util');
 const babel = require('gulp-babel');
+const mocha = require('gulp-mocha');
 const eslint = require('gulp-eslint');
 
 const src = 'lib/index.js';
@@ -15,3 +17,17 @@ gulp.task('build', ['lint'], () => (
   .pipe(babel())
   .pipe(gulp.dest('dist'))
 ));
+
+gulp.task('test', ['lint'], () => (
+  gulp.src('test')
+  .pipe(mocha({ reporter: 'spec' }))
+  .on('error', util.log)
+));
+
+gulp.task('watch', () => {
+  gulp.watch(src, ['test']);
+});
+
+gulp.task('develop', ['watch']);
+
+gulp.task('default', ['develop']);
