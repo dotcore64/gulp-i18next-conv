@@ -10,6 +10,8 @@ deploy:
     tags: true
 env:
 - CXX=g++-4.8
+after_script:
+- npm run coveralls
 addons:
   apt:
     sources:
