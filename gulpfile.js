@@ -4,7 +4,7 @@ const babel = require('gulp-babel');
 const mocha = require('gulp-mocha');
 const eslint = require('gulp-eslint');
 
-const src = 'lib/index.js';
+const src = 'src/index.js';
 
 gulp.task('lint', () =>
   gulp.src(src)
