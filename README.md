@@ -42,9 +42,7 @@ Of course, the input paths and output paths can be fully adapted according to yo
 Type: `function` optional, default: 
 
 ```js
-function(filename) {
-  return filename.match(/^\/?([^\/]+)\//)[1];
-};
+filename => filename.match(/^\/?([^\/]+)\//)[1]
 ```
 
 Function that can be used to specify what part of the input path is the locale. By default it is the name of the first directory specified by a glob. For example, in the example above `locale/*/LC_MESSAGES/*.po`, the contents of the first `*` will be used as the locale name.
