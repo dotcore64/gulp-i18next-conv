@@ -3,6 +3,8 @@
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coverage Status][coveralls-badge]][coveralls]
+[![Dependency Status][dependency-status-badge]][dependency-status]
+[![devDependency Status][dev-dependency-status-badge]][dev-dependency-status]
 
 > Convert po files into i18next compatible json files
 
@@ -59,3 +61,9 @@ See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
 
 [coveralls-badge]: https://img.shields.io/coveralls/perrin4869/gulp-i18next-conv/master.svg
 [coveralls]: https://coveralls.io/r/perrin4869/gulp-i18next-conv
+
+[dependency-status-badge]: https://david-dm.org/perrin4869/gulp-i18next-conv.svg?style=flat
+[dependency-status]: https://david-dm.org/perrin4869/gulp-i18next-conv
+
+[dev-dependency-status-badge]: https://david-dm.org/perrin4869/gulp-i18next-conv/dev-status.svg?style=flat
+[dev-dependency-status]: https://david-dm.org/perrin4869/gulp-i18next-conv#info=devDependencies
