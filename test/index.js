@@ -62,4 +62,23 @@ describe('gulp-i18next-conv', () => {
       });
     });
   });
+
+  describe('errors', () => {
+    it('should throw error on invalid file', done => {
+      // create the fake file
+      const poFile = new File({
+        path: 'test/messages.po',
+        contents: null,
+      });
+
+      // Create a prefixer plugin stream
+      const converter = i18next(() => 'en');
+      converter.write(poFile);
+
+      converter.on('error', err => {
+        err.message.should.equal('Invalid file');
+        done();
+      });
+    });
+  });
 });

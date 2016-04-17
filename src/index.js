@@ -28,6 +28,8 @@ function gulpGettextConv(determineDomain = defDetermineDomain, options = {}) {
         // start the transformation
         newFile.contents.write(data);
         newFile.contents.end();
+      } else {
+        throw new Error('Invalid file');
       }
 
       const dirname = path.dirname(file.path);
