@@ -9,10 +9,9 @@ const PluginError = gutil.PluginError;
 
 // consts
 const PLUGIN_NAME = 'gulp-i18next-conv';
+const defDetermineDomain = filename => filename.match(/^\/?([^\/]+)\//)[1];
 
 conv.gettextToI18nextDataAsync = Promise.promisify(conv.gettextToI18nextData);
-
-const defDetermineDomain = filename => filename.match(/^\/?([^\/]+)\//)[1];
 
 // plugin level function (dealing with files)
 function gulpGettextConv(determineDomain = defDetermineDomain, options = {}) {
