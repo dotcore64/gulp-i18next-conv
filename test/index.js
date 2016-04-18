@@ -7,7 +7,7 @@ const chai = require('chai');
 const path = require('path');
 const es = require('event-stream');
 
-const i18next = rewire('../dist');
+const i18next = rewire('../src');
 
 chai.should();
 
