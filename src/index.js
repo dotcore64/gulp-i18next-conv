@@ -1,11 +1,9 @@
-const Promise = require('bluebird');
+import Promise from 'bluebird';
 
-const through = require('through2');
-const gutil = require('gulp-util');
-const conv = require('i18next-conv');
-const path = require('path');
-
-const PluginError = gutil.PluginError;
+import through from 'through2';
+import { PluginError } from 'gulp-util';
+import conv from 'i18next-conv';
+import path from 'path';
 
 // consts
 const PLUGIN_NAME = 'gulp-i18next-conv';

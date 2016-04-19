@@ -1,11 +1,11 @@
-const File = require('vinyl');
-const PassThrough = require('stream').PassThrough;
+import File from 'vinyl';
+import { PassThrough } from 'stream';
 
-const rewire = require('rewire');
-const sinon = require('sinon');
-const chai = require('chai');
-const path = require('path');
-const es = require('event-stream');
+import rewire from 'rewire';
+import sinon from 'sinon';
+import chai from 'chai';
+import path from 'path';
+import es from 'event-stream';
 
 const i18next = rewire('../src');
 
