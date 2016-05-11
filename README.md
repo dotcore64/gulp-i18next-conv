@@ -61,11 +61,11 @@ See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
 [npm-badge]: https://img.shields.io/npm/v/gulp-i18next-conv.svg?style=flat-square
 [npm]: https://www.npmjs.org/package/gulp-i18next-conv
 
-[coveralls-badge]: https://img.shields.io/coveralls/perrin4869/gulp-i18next-conv/master.svg
+[coveralls-badge]: https://img.shields.io/coveralls/perrin4869/gulp-i18next-conv/master.svg?style=flat-square
 [coveralls]: https://coveralls.io/r/perrin4869/gulp-i18next-conv
 
-[dependency-status-badge]: https://david-dm.org/perrin4869/gulp-i18next-conv.svg?style=flat
+[dependency-status-badge]: https://david-dm.org/perrin4869/gulp-i18next-conv.svg?style=flat-square
 [dependency-status]: https://david-dm.org/perrin4869/gulp-i18next-conv
 
-[dev-dependency-status-badge]: https://david-dm.org/perrin4869/gulp-i18next-conv/dev-status.svg?style=flat
+[dev-dependency-status-badge]: https://david-dm.org/perrin4869/gulp-i18next-conv/dev-status.svg?style=flat-square
 [dev-dependency-status]: https://david-dm.org/perrin4869/gulp-i18next-conv#info=devDependencies
