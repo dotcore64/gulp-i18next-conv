@@ -16,7 +16,7 @@ gulp.task('lint', () =>
 gulp.task('test', ['lint'], () => (
   gulp.src('test')
   .pipe(mocha({
-    compilers: {
+    compilers: { // TODO: remove once mocha.opts is supported by the api
       js: compiler,
     },
   }))
