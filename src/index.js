@@ -30,8 +30,8 @@ function gulpGettextConv(determineDomain = defDetermineDomain, options = {}) {
       }
 
       const dirname = path.dirname(file.path);
-      const basename = path.basename(file.path);
-      newFile.path = path.join(dirname, basename.replace(path.extname(basename), '.json'));
+      const basename = path.basename(file.path, path.extname(file.path));
+      newFile.path = path.join(dirname, `${basename}.json`);
       // make sure the file goes through the next gulp plugin
       this.push(newFile);
     })
