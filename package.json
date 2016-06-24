@@ -33,7 +33,7 @@
   "dependencies": {
     "bluebird": "^3.3.5",
     "gulp-util": "^3.0.7",
-    "i18next-conv": "^2.5.0",
+    "i18next-conv": "^3.0.0",
     "through2": "^2.0.1"
   },
   "devDependencies": {
