@@ -1,6 +1,7 @@
 import { PluginError } from 'gulp-util';
 
 import through from 'through2';
+import pkginfo from 'pkginfo';
 import path from 'path';
 import vinylToString from 'vinyl-contents-tostring';
 import { gettextToI18next } from 'i18next-conv';
@@ -50,3 +51,5 @@ function gulpGettextConv({
 // exporting the plugin main function
 module.exports = gulpGettextConv;
 module.exports.determineDomain = defDetermineDomain;
+
+pkginfo(module, ['version']);

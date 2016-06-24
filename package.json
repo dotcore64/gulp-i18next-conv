@@ -33,6 +33,7 @@
   "dependencies": {
     "gulp-util": "^3.0.7",
     "i18next-conv": "^3.0.1",
+    "pkginfo": "^0.4.0",
     "through2": "^2.0.1",
     "vinyl-contents-tostring": "0.0.3"
   },

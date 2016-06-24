@@ -12,6 +12,7 @@ chai.use(require('sinon-chai'));
 chai.use(require('dirty-chai'));
 
 const i18next = rewire('../src');
+const pkg = require('../package.json');
 const testFile = readFileSync('test/messages.po').toString('utf8');
 
 describe('gulp-i18next-conv', () => {
@@ -147,6 +148,10 @@ describe('gulp-i18next-conv', () => {
         expect(file.contents.toString()).to.equal('{\n    "lib/error.c:116": "bar"\n}');
         done();
       });
+    });
+
+    it('should export correct metadata', () => {
+      expect(i18next.version).to.equal(pkg.version);
     });
   });
 });
