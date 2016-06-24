@@ -149,9 +149,16 @@ describe('gulp-i18next-conv', () => {
         done();
       });
     });
+  });
 
+  describe('named exports', () => {
     it('should export correct metadata', () => {
       expect(i18next.version).to.equal(pkg.version);
+    });
+
+    it('should correctly determine domain with exported determineDomain', () => {
+      const defDetermineDomain = i18next.determineDomain;
+      expect(defDetermineDomain('foo/bar')).to.equal('foo');
     });
   });
 });
