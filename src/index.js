@@ -49,3 +49,4 @@ function gulpGettextConv({
 
 // exporting the plugin main function
 module.exports = gulpGettextConv;
+module.exports.determineDomain = defDetermineDomain;

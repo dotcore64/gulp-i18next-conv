@@ -51,6 +51,10 @@ Type: `object`, optional, default `{}`
 
 Any remaining properties will be passed to the [i18next-conv](https://github.com/i18next/i18next-gettext-converter) as options.
 
+### determineDomain
+
+The default determineDomain, `filename => filename.match(/^\/?([^\/]+)\//)[1]`
+
 ## License
 
 See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
