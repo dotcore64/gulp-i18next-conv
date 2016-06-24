@@ -6,11 +6,13 @@ import sinon from 'sinon';
 import path from 'path';
 import es from 'event-stream';
 import chai, { expect } from 'chai';
+import { readFileSync } from 'fs';
 
 chai.use(require('sinon-chai'));
 chai.use(require('dirty-chai'));
 
 const i18next = rewire('../src');
+const testFile = readFileSync('test/messages.po').toString('utf8');
 
 describe('gulp-i18next-conv', () => {
   describe('in streaming mode', () => {
@@ -20,6 +22,8 @@ describe('gulp-i18next-conv', () => {
         path: 'test/messages.po',
         contents: new PassThrough(),
       });
+      poFile.contents.write(testFile);
+      poFile.contents.end();
 
       // Create a prefixer plugin stream
       const converter = i18next({
@@ -48,7 +52,7 @@ describe('gulp-i18next-conv', () => {
       // create the fake file
       const poFile = new File({
         path: 'test/messages.po',
-        contents: new Buffer(''),
+        contents: new Buffer(testFile),
       });
 
       // Create a prefixer plugin stream
@@ -123,7 +127,7 @@ describe('gulp-i18next-conv', () => {
       // create the fake file
       const poFile = new File({
         path: 'test/messages.po',
-        contents: new Buffer(''),
+        contents: new Buffer(testFile),
       });
 
       // Create a prefixer plugin stream

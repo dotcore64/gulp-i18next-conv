@@ -1,15 +1,13 @@
-import Promise from 'bluebird';
 import { PluginError } from 'gulp-util';
 
 import through from 'through2';
-import conv from 'i18next-conv';
 import path from 'path';
+import vinylToString from 'vinyl-contents-tostring';
+import { gettextToI18next } from 'i18next-conv';
 
 // consts
 const PLUGIN_NAME = 'gulp-i18next-conv';
 const defDetermineDomain = filename => filename.match(/^\/?([^\/]+)\//)[1];
-
-conv.gettextToI18nextDataAsync = Promise.promisify(conv.gettextToI18nextData);
 
 // plugin level function (dealing with files)
 function gulpGettextConv({
@@ -20,7 +18,8 @@ function gulpGettextConv({
   return through.obj(function (file, enc, cb) {
     const domain = determineDomain(file.relative);
 
-    conv.gettextToI18nextDataAsync(domain, file.path, options)
+    vinylToString(file, enc)
+    .then(contents => gettextToI18next(domain, contents, options))
     .then(data => {
       const newFile = file.clone();
       const dirname = path.dirname(file.path);
@@ -39,11 +38,11 @@ function gulpGettextConv({
 
       // make sure the file goes through the next gulp plugin
       this.push(newFile);
+      cb();
     })
     .catch(err => {
-      throw new PluginError(PLUGIN_NAME, err.message);
-    })
-    .asCallback(cb);
+      cb(new PluginError(PLUGIN_NAME, err.message));
+    });
   });
 }
 
