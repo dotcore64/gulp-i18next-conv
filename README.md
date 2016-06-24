@@ -37,11 +37,11 @@ Of course, the input paths and output paths can be fully adapted according to yo
 
 ## API
 
-### i18next(determineDomain, options)
+### i18next({ determineDomain, ...options })
 
 #### determineDomain
 
-Type: `function` optional, default: `filename => filename.match(/^\/?([^\/]+)\//)[1]`
+Type: `function(filename)` optional, default: `filename => filename.match(/^\/?([^\/]+)\//)[1]`
 
 Function that can be used to specify what part of the input path is the locale. By default it is the name of the first directory specified by a glob. For example, in the example above `locale/*/LC_MESSAGES/*.po`, the contents of the first `*` will be used as the locale name.
 
@@ -49,7 +49,7 @@ Function that can be used to specify what part of the input path is the locale. 
 
 Type: `object`, optional, default `{}`
 
-Options passed to the [i18next-conv](https://github.com/i18next/i18next-gettext-converter) converter
+Any remaining properties will be passed to the [i18next-conv](https://github.com/i18next/i18next-gettext-converter) as options.
 
 ## License
 

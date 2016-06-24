@@ -21,7 +21,9 @@ describe('gulp-i18next-conv', () => {
       });
 
       // Create a prefixer plugin stream
-      const converter = i18next(() => 'en');
+      const converter = i18next({
+        determineDomain: () => 'en',
+      });
       converter.write(poFile);
 
       // wait for the file to come back out
@@ -49,7 +51,9 @@ describe('gulp-i18next-conv', () => {
       });
 
       // Create a prefixer plugin stream
-      const converter = i18next(() => 'en');
+      const converter = i18next({
+        determineDomain: () => 'en',
+      });
       converter.write(poFile);
 
       // wait for the file to come back out
@@ -74,7 +78,9 @@ describe('gulp-i18next-conv', () => {
       });
 
       // Create a prefixer plugin stream
-      const converter = i18next(() => 'en');
+      const converter = i18next({
+        determineDomain: () => 'en',
+      });
       converter.write(poFile);
 
       converter.on('error', err => {
@@ -120,7 +126,10 @@ describe('gulp-i18next-conv', () => {
       });
 
       // Create a prefixer plugin stream
-      const converter = i18next(() => 'en', { keyasareference: true });
+      const converter = i18next({
+        determineDomain: () => 'en',
+        keyasareference: true,
+      });
       converter.write(poFile);
 
       // wait for the file to come back out
