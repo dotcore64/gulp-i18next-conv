@@ -1,5 +1,8 @@
 language: node_js
 node_js:
+- '0.10'
+- '0.12'
+- '4'
 - '6'
 deploy:
   api_key:
@@ -8,5 +11,7 @@ deploy:
   provider: npm
   on:
     tags: true
+before_install:
+- case ${TRAVIS_NODE_VERSION} in 0.10*|0.12*) mv gulpfile.js gulpfile.babel.js ;; esac
 after_script:
 - npm run coveralls
