@@ -41,9 +41,9 @@ Of course, the input paths and output paths can be fully adapted according to yo
 
 #### determineDomain
 
-Type: `function(filename)` optional, default: `filename => filename.match(/^\/?([^\/]+)\//)[1]`
+Type: `function(filename, contents)` optional, default: `filename => filename.match(/^\/?([^\/]+)\//)[1]`
 
-Function that can be used to specify what part of the input path is the locale. By default it is the name of the first directory specified by a glob. For example, in the example above `locale/*/LC_MESSAGES/*.po`, the contents of the first `*` will be used as the locale name.
+Function that can be used to determine the locale of the file being translated. Gets the relative path of the file, and its contents. By default it is the name of the first directory specified by a glob. For example, in the example above `locale/*/LC_MESSAGES/*.po`, the contents of the first `*` will be used as the locale name.
 
 #### options
 

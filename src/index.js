@@ -16,10 +16,11 @@ function gulpGettextConv({
 } = {}) {
   // creating a stream through which each file will pass
   return through.obj(function (file, enc, cb) {
-    const domain = determineDomain(file.relative);
-
     vinylToString(file, enc)
-    .then(contents => gettextToI18next(domain, contents, options))
+    .then(contents => {
+      const domain = determineDomain(file.relative, contents);
+      return gettextToI18next(domain, contents, options);
+    })
     .then(data => {
       const newFile = file.clone();
       const dirname = path.dirname(file.path);
