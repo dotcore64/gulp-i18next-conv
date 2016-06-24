@@ -3,13 +3,14 @@ import { PassThrough } from 'stream';
 
 import rewire from 'rewire';
 import sinon from 'sinon';
-import chai from 'chai';
 import path from 'path';
 import es from 'event-stream';
+import chai, { expect } from 'chai';
+
+chai.use(require('sinon-chai'));
+chai.use(require('dirty-chai'));
 
 const i18next = rewire('../src');
-
-chai.should();
 
 describe('gulp-i18next-conv', () => {
   describe('in streaming mode', () => {
@@ -29,13 +30,13 @@ describe('gulp-i18next-conv', () => {
       // wait for the file to come back out
       converter.once('data', file => {
         // make sure it came out the same way it went in
-        file.isStream().should.equal(true);
-        path.basename(file.path).should.equal('messages.json');
+        expect(file.isStream()).to.be.true();
+        expect(path.basename(file.path)).to.equal('messages.json');
 
         // buffer the contents to make sure it got prepended to
         file.contents.pipe(es.wait((err, data) => {
           // check the contents
-          data.toString().should.equal('{\n    "foo": "bar"\n}');
+          expect(data.toString()).to.equal('{\n    "foo": "bar"\n}');
           done();
         }));
       });
@@ -59,11 +60,11 @@ describe('gulp-i18next-conv', () => {
       // wait for the file to come back out
       converter.once('data', file => {
         // make sure it came out the same way it went in
-        file.isBuffer().should.equal(true);
-        path.basename(file.path).should.equal('messages.json');
+        expect(file.isBuffer()).to.equal(true);
+        expect(path.basename(file.path)).to.equal('messages.json');
 
         // buffer the contents to make sure it got prepended to
-        file.contents.toString().should.equal('{\n    "foo": "bar"\n}');
+        expect(file.contents.toString()).to.equal('{\n    "foo": "bar"\n}');
         done();
       });
     });
@@ -84,7 +85,7 @@ describe('gulp-i18next-conv', () => {
       converter.write(poFile);
 
       converter.on('error', err => {
-        err.message.should.equal('Invalid file');
+        expect(err.message).to.equal('Invalid file');
         done();
       });
     });
@@ -109,9 +110,9 @@ describe('gulp-i18next-conv', () => {
         // wait for the file to come back out
         converter.once('data', file => {
           // make sure it came out the same way it went in
-          file.isBuffer().should.equal(true);
-          defDetermineDomain.calledOnce.should.equal(true);
-          defDetermineDomain.returned('test').should.equal(true);
+          expect(file.isBuffer()).to.equal(true);
+          expect(defDetermineDomain).to.be.calledOnce();
+          expect(defDetermineDomain).to.have.returned('test');
 
           done();
         });
@@ -135,11 +136,11 @@ describe('gulp-i18next-conv', () => {
       // wait for the file to come back out
       converter.once('data', file => {
         // make sure it came out the same way it went in
-        file.isBuffer().should.equal(true);
-        path.basename(file.path).should.equal('messages.json');
+        expect(file.isBuffer()).to.be.true();
+        expect(path.basename(file.path)).to.equal('messages.json');
 
         // buffer the contents to make sure it got prepended to
-        file.contents.toString().should.equal('{\n    "lib/error.c:116": "bar"\n}');
+        expect(file.contents.toString()).to.equal('{\n    "lib/error.c:116": "bar"\n}');
         done();
       });
     });
