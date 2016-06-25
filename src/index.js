@@ -15,7 +15,7 @@ const PLUGIN_NAME = 'gulp-i18next-conv';
 const defDetermineDomain = filename => filename.match(/^\/?([^\/]+)\//)[1];
 
 function getConverter(file, gettextFormat) {
-  switch (file.extname) {
+  switch (path.extname(file.path)) { // file.extname doesn't work in older vinyl used by gulp 3
     case '.po':
     case '.pot':
     case '.mo':
