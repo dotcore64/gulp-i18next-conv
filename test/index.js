@@ -76,6 +76,27 @@ describe('gulp-i18next-conv', () => {
     });
   });
 
+  describe('null file', () => {
+    it('should return a null file', done => {
+      // create the fake file
+      const poFile = new File({
+        path: 'test/messages.po',
+        contents: null,
+      });
+
+      // Create a prefixer plugin stream
+      const converter = i18next({
+        determineDomain: () => 'en',
+      });
+      converter.write(poFile);
+
+      converter.on('data', data => {
+        expect(data.isNull()).to.be.true();
+        done();
+      });
+    });
+  });
+
   describe('errors', () => {
     it('should throw error on invalid file', done => {
       // create the fake file
@@ -83,6 +104,9 @@ describe('gulp-i18next-conv', () => {
         path: 'test/messages.po',
         contents: null,
       });
+
+      const stub = sinon.stub(poFile, 'isNull');
+      stub.returns(false);
 
       // Create a prefixer plugin stream
       const converter = i18next({

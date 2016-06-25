@@ -17,7 +17,12 @@ function gulpGettextConv({
 } = {}) {
   // creating a stream through which each file will pass
   return through.obj(function (file, enc, cb) {
-    vinylToString(file, enc)
+    if (file.isNull()) {
+      this.push(file);
+      return cb();
+    }
+
+    return vinylToString(file, enc)
     .then(contents => {
       const domain = determineDomain(file.relative, contents);
       return gettextToI18next(domain, contents, options);
@@ -34,7 +39,7 @@ function gulpGettextConv({
       } else if (file.isStream()) {
         newFile.contents.write(data);
         newFile.contents.end();
-      } else {
+      } else { // In case vinyl accepts new file types in the future
         throw new Error('Invalid file');
       }
 
