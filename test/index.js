@@ -13,7 +13,8 @@ chai.use(require('dirty-chai'));
 
 const i18next = rewire('../src');
 const pkg = require('../package.json');
-const testFile = readFileSync('test/messages.po').toString('utf8');
+const testFile = readFileSync('test/messages.po');
+const testExpected = readFileSync('test/messages.json').slice(0, -1);
 
 describe('gulp-i18next-conv', () => {
   describe('in streaming mode', () => {
@@ -41,7 +42,7 @@ describe('gulp-i18next-conv', () => {
         // buffer the contents to make sure it got prepended to
         file.contents.pipe(es.wait((err, data) => {
           // check the contents
-          expect(data.toString()).to.equal('{\n    "foo": "bar"\n}');
+          expect(data).to.deep.equal(testExpected);
           done();
         }));
       });
@@ -69,7 +70,7 @@ describe('gulp-i18next-conv', () => {
         expect(path.basename(file.path)).to.equal('messages.json');
 
         // buffer the contents to make sure it got prepended to
-        expect(file.contents.toString()).to.equal('{\n    "foo": "bar"\n}');
+        expect(file.contents).to.deep.equal(testExpected);
         done();
       });
     });
