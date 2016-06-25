@@ -4,15 +4,42 @@ import through from 'through2';
 import pkginfo from 'pkginfo';
 import path from 'path';
 import vinylToString from 'vinyl-contents-tostring';
-import { gettextToI18next } from 'i18next-conv';
+import {
+  gettextToI18next,
+  i18nextToPo,
+  i18nextToPot,
+  i18nextToMo,
+} from 'i18next-conv';
 
-// consts
 const PLUGIN_NAME = 'gulp-i18next-conv';
 const defDetermineDomain = filename => filename.match(/^\/?([^\/]+)\//)[1];
+
+function getConverter(file, gettextFormat) {
+  switch (file.extname) {
+    case '.po':
+    case '.pot':
+    case '.mo':
+      return [gettextToI18next, '.json'];
+    case '.json':
+      switch (gettextFormat) {
+        case 'po':
+          return [i18nextToPo, '.po'];
+        case 'pot':
+          return [i18nextToPot, '.pot'];
+        case 'mo':
+          return [i18nextToMo, '.mo'];
+        default:
+          throw new PluginError(PLUGIN_NAME, 'Cannot determine which which file to convert to.');
+      }
+    default:
+      throw new PluginError(PLUGIN_NAME, 'Cannot determine which which file to convert to.');
+  }
+}
 
 // plugin level function (dealing with files)
 function gulpGettextConv({
   determineDomain = defDetermineDomain,
+  gettextFormat = 'po',
   ...options,
 } = {}) {
   // creating a stream through which each file will pass
@@ -22,17 +49,26 @@ function gulpGettextConv({
       return cb();
     }
 
+    let converter;
+    let ext;
+
+    try {
+      [converter, ext] = getConverter(file, gettextFormat);
+    } catch (err) {
+      return cb(err);
+    }
+
     return vinylToString(file, enc)
     .then(contents => {
       const domain = determineDomain(file.relative, contents);
-      return gettextToI18next(domain, contents, options);
+      return converter(domain, contents, options);
     })
     .then(data => {
       const newFile = file.clone();
       const dirname = path.dirname(file.path);
       const basename = path.basename(file.path, path.extname(file.path));
 
-      newFile.path = path.join(dirname, `${basename}.json`);
+      newFile.path = path.join(dirname, `${basename}${ext}`);
 
       if (file.isBuffer()) {
         newFile.contents = new Buffer(data);

@@ -14,7 +14,10 @@ chai.use(require('dirty-chai'));
 const i18next = rewire('../src');
 const pkg = require('../package.json');
 const testFile = readFileSync('test/messages.po');
-const testExpected = readFileSync('test/messages.json').slice(0, -1);
+const expectedJSON = readFileSync('test/messages.json').slice(0, -1);
+const expectedPo = readFileSync('test/messages.expected.po').slice(0, -1);
+const expectedPot = readFileSync('test/messages.expected.pot').slice(0, -1);
+const expectedMo = readFileSync('test/messages.expected.mo');
 
 describe('gulp-i18next-conv', () => {
   describe('in streaming mode', () => {
@@ -42,7 +45,7 @@ describe('gulp-i18next-conv', () => {
         // buffer the contents to make sure it got prepended to
         file.contents.pipe(es.wait((err, data) => {
           // check the contents
-          expect(data).to.deep.equal(testExpected);
+          expect(data).to.deep.equal(expectedJSON);
           done();
         }));
       });
@@ -70,7 +73,7 @@ describe('gulp-i18next-conv', () => {
         expect(path.basename(file.path)).to.equal('messages.json');
 
         // buffer the contents to make sure it got prepended to
-        expect(file.contents).to.deep.equal(testExpected);
+        expect(file.contents).to.deep.equal(expectedJSON);
         done();
       });
     });
@@ -97,8 +100,66 @@ describe('gulp-i18next-conv', () => {
     });
   });
 
+  describe('i18next to gettext', () => {
+    it('should convert json to po', done => {
+      const jsonFile = new File({
+        path: 'test/messages.json',
+        contents: new Buffer(expectedJSON),
+      });
+
+      const converter = i18next({
+        determineDomain: () => 'en',
+        noDate: true,
+      });
+      converter.write(jsonFile);
+
+      converter.once('data', file => {
+        expect(file.contents).to.deep.equal(expectedPo);
+        done();
+      });
+    });
+
+    it('should convert json to pot', done => {
+      const jsonFile = new File({
+        path: 'test/messages.json',
+        contents: new Buffer(expectedJSON),
+      });
+
+      const converter = i18next({
+        determineDomain: () => 'en',
+        gettextFormat: 'pot',
+        noDate: true,
+      });
+      converter.write(jsonFile);
+
+      converter.once('data', file => {
+        expect(file.contents).to.deep.equal(expectedPot);
+        done();
+      });
+    });
+
+    it('should convert json to mo', done => {
+      const jsonFile = new File({
+        path: 'test/messages.json',
+        contents: new Buffer(expectedJSON),
+      });
+
+      const converter = i18next({
+        determineDomain: () => 'en',
+        gettextFormat: 'mo',
+        noDate: true,
+      });
+      converter.write(jsonFile);
+
+      converter.once('data', file => {
+        expect(file.contents).to.deep.equal(expectedMo);
+        done();
+      });
+    });
+  });
+
   describe('errors', () => {
-    it('should throw error on invalid file', done => {
+    it('should throw error on invalid vinyl file', done => {
       // create the fake file
       const poFile = new File({
         path: 'test/messages.po',
@@ -112,12 +173,39 @@ describe('gulp-i18next-conv', () => {
       const converter = i18next({
         determineDomain: () => 'en',
       });
-      converter.write(poFile);
-
       converter.on('error', err => {
         expect(err.message).to.equal('Invalid file');
         done();
+      })
+      .write(poFile);
+    });
+
+    it('should throw error on non gettext or json file', done => {
+      const fooFile = new File({
+        path: 'test/messages.foo',
+        contents: new Buffer(''),
       });
+
+      const converter = i18next();
+      converter.on('error', err => {
+        expect(err.message).to.equal('Cannot determine which which file to convert to.');
+        done();
+      })
+      .write(fooFile);
+    });
+
+    it('should throw error on non-valid gettextFormat', done => {
+      const jsonFile = new File({
+        path: 'test/messages.json',
+        contents: new Buffer(''),
+      });
+
+      const converter = i18next({ gettextFormat: 'foo' });
+      converter.on('error', err => {
+        expect(err.message).to.equal('Cannot determine which which file to convert to.');
+        done();
+      })
+      .write(jsonFile);
     });
   });
 
@@ -135,7 +223,6 @@ describe('gulp-i18next-conv', () => {
 
         // Create a prefixer plugin stream
         const converter = i18next();
-        converter.write(poFile);
 
         // wait for the file to come back out
         converter.once('data', file => {
@@ -145,7 +232,8 @@ describe('gulp-i18next-conv', () => {
           expect(defDetermineDomain).to.have.returned('test');
 
           done();
-        });
+        })
+        .write(poFile);
       });
     });
 
@@ -161,7 +249,6 @@ describe('gulp-i18next-conv', () => {
         determineDomain: () => 'en',
         keyasareference: true,
       });
-      converter.write(poFile);
 
       // wait for the file to come back out
       converter.once('data', file => {
@@ -172,7 +259,8 @@ describe('gulp-i18next-conv', () => {
         // buffer the contents to make sure it got prepended to
         expect(file.contents.toString()).to.equal('{\n    "lib/error.c:116": "bar"\n}');
         done();
-      });
+      })
+      .write(poFile);
     });
   });
 

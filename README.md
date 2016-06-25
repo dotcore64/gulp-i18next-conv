@@ -33,17 +33,23 @@ gulp.task('locale-build', function() {
 });
 ```
 
-Of course, the input paths and output paths can be fully adapted according to your needs.
+Converting i18next `json` to gettext formats, `po`, `pot` and `mo` is supported too.
 
 ## API
 
-### i18next({ determineDomain, ...options })
+### i18next({ determineDomain, gettextFormat, ...options })
 
 #### determineDomain
 
 Type: `function(filename, contents)` optional, default: `filename => filename.match(/^\/?([^\/]+)\//)[1]`
 
 Function that can be used to determine the locale of the file being translated. Gets the relative path of the file, and its contents. By default it is the name of the first directory specified by a glob. For example, in the example above `locale/*/LC_MESSAGES/*.po`, the contents of the first `*` will be used as the locale name.
+
+#### gettextFormat
+
+Type: `string`, default: `'po'`
+
+When converting i18next `json` files into `gettext` format, you can use this option to decide whether to output `mo`, `pot` or `po`. It accepts only one of those 3 values.
 
 #### options
 
