@@ -45,6 +45,8 @@ Type: `function(filename, contents)` optional, default: `filename => filename.ma
 
 Function that can be used to determine the locale of the file being translated. Gets the relative path of the file, and its contents. By default it is the name of the first directory specified by a glob. For example, in the example above `locale/*/LC_MESSAGES/*.po`, the contents of the first `*` will be used as the locale name.
 
+Note: This option should probably be renamed to `determineLocale` to be more consistent with canonical gettext. The reason for the confusion is terminology chosen by [node-gettext](https://github.com/andris9/node-gettext), where locales are considered domains.
+
 #### gettextFormat
 
 Type: `string`, default: `'po'`
