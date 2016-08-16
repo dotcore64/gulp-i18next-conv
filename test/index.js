@@ -13,6 +13,7 @@ chai.use(require('dirty-chai'));
 
 const i18next = rewire('../src');
 const pkg = require('../package.json');
+
 const testFile = readFileSync('test/messages.po');
 const expectedJSON = readFileSync('test/messages.json').slice(0, -1);
 const expectedPo = readFileSync('test/messages.expected.po').slice(0, -1);
