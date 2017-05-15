@@ -1,5 +1,7 @@
 # gulp-i18next-conv
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/perrin4869/gulp-i18next-conv.svg)](https://greenkeeper.io/)
+
 [![Travis][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coverage Status][coveralls-badge]][coveralls]
