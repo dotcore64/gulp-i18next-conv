@@ -1,6 +1,5 @@
 {
   "extends": "airbnb-base",
-  "parser": "babel-eslint",
   "rules": {
     "func-names": 0 // Needed for this binding
   }

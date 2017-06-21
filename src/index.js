@@ -12,7 +12,7 @@ import {
 } from 'i18next-conv';
 
 const PLUGIN_NAME = 'gulp-i18next-conv';
-const defDetermineDomain = filename => filename.match(/^\/?([^\/]+)\//)[1];
+const defDetermineDomain = filename => filename.match(/^\/?([^/]+)\//)[1];
 
 function getConverter(file, gettextFormat) {
   switch (path.extname(file.path)) { // file.extname doesn't work in older vinyl used by gulp 3
@@ -40,7 +40,7 @@ function getConverter(file, gettextFormat) {
 function gulpGettextConv({
   determineDomain = defDetermineDomain,
   gettextFormat = 'po',
-  ...options,
+  ...options
 } = {}) {
   // creating a stream through which each file will pass
   return through.obj(function (file, enc, cb) {
@@ -59,11 +59,11 @@ function gulpGettextConv({
     }
 
     return vinylToString(file, enc)
-    .then(contents => {
+    .then((contents) => {
       const domain = determineDomain(file.relative, contents);
       return converter(domain, contents, options);
     })
-    .then(data => {
+    .then((data) => {
       const newFile = file.clone();
       const dirname = path.dirname(file.path);
       const basename = path.basename(file.path, path.extname(file.path));
@@ -83,7 +83,7 @@ function gulpGettextConv({
       this.push(newFile);
       cb();
     })
-    .catch(err => {
+    .catch((err) => {
       cb(new PluginError(PLUGIN_NAME, err.message));
     });
   });
