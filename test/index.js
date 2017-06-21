@@ -22,7 +22,7 @@ const expectedMo = readFileSync('test/messages.expected.mo');
 
 describe('gulp-i18next-conv', () => {
   describe('in streaming mode', () => {
-    it('should convert given po file', done => {
+    it('should convert given po file', (done) => {
       // create the fake file
       const poFile = new File({
         path: 'test/messages.po',
@@ -38,7 +38,7 @@ describe('gulp-i18next-conv', () => {
       converter.write(poFile);
 
       // wait for the file to come back out
-      converter.once('data', file => {
+      converter.once('data', (file) => {
         // make sure it came out the same way it went in
         expect(file.isStream()).to.be.true();
         expect(path.basename(file.path)).to.equal('messages.json');
@@ -54,7 +54,7 @@ describe('gulp-i18next-conv', () => {
   });
 
   describe('in buffering mode', () => {
-    it('should convert given po file', done => {
+    it('should convert given po file', (done) => {
       // create the fake file
       const poFile = new File({
         path: 'test/messages.po',
@@ -68,7 +68,7 @@ describe('gulp-i18next-conv', () => {
       converter.write(poFile);
 
       // wait for the file to come back out
-      converter.once('data', file => {
+      converter.once('data', (file) => {
         // make sure it came out the same way it went in
         expect(file.isBuffer()).to.equal(true);
         expect(path.basename(file.path)).to.equal('messages.json');
@@ -81,7 +81,7 @@ describe('gulp-i18next-conv', () => {
   });
 
   describe('null file', () => {
-    it('should return a null file', done => {
+    it('should return a null file', (done) => {
       // create the fake file
       const poFile = new File({
         path: 'test/messages.po',
@@ -94,7 +94,7 @@ describe('gulp-i18next-conv', () => {
       });
       converter.write(poFile);
 
-      converter.on('data', data => {
+      converter.on('data', (data) => {
         expect(data.isNull()).to.be.true();
         done();
       });
@@ -102,7 +102,7 @@ describe('gulp-i18next-conv', () => {
   });
 
   describe('i18next to gettext', () => {
-    it('should convert json to po', done => {
+    it('should convert json to po', (done) => {
       const jsonFile = new File({
         path: 'test/messages.json',
         contents: new Buffer(expectedJSON),
@@ -114,13 +114,13 @@ describe('gulp-i18next-conv', () => {
       });
       converter.write(jsonFile);
 
-      converter.once('data', file => {
+      converter.once('data', (file) => {
         expect(file.contents).to.deep.equal(expectedPo);
         done();
       });
     });
 
-    it('should convert json to pot', done => {
+    it('should convert json to pot', (done) => {
       const jsonFile = new File({
         path: 'test/messages.json',
         contents: new Buffer(expectedJSON),
@@ -133,13 +133,13 @@ describe('gulp-i18next-conv', () => {
       });
       converter.write(jsonFile);
 
-      converter.once('data', file => {
+      converter.once('data', (file) => {
         expect(file.contents).to.deep.equal(expectedPot);
         done();
       });
     });
 
-    it('should convert json to mo', done => {
+    it('should convert json to mo', (done) => {
       const jsonFile = new File({
         path: 'test/messages.json',
         contents: new Buffer(expectedJSON),
@@ -152,7 +152,7 @@ describe('gulp-i18next-conv', () => {
       });
       converter.write(jsonFile);
 
-      converter.once('data', file => {
+      converter.once('data', (file) => {
         expect(file.contents).to.deep.equal(expectedMo);
         done();
       });
@@ -160,7 +160,7 @@ describe('gulp-i18next-conv', () => {
   });
 
   describe('errors', () => {
-    it('should throw error on invalid vinyl file', done => {
+    it('should throw error on invalid vinyl file', (done) => {
       // create the fake file
       const poFile = new File({
         path: 'test/messages.po',
@@ -174,35 +174,35 @@ describe('gulp-i18next-conv', () => {
       const converter = i18next({
         determineDomain: () => 'en',
       });
-      converter.on('error', err => {
+      converter.on('error', (err) => {
         expect(err.message).to.equal('Invalid file');
         done();
       })
       .write(poFile);
     });
 
-    it('should throw error on non gettext or json file', done => {
+    it('should throw error on non gettext or json file', (done) => {
       const fooFile = new File({
         path: 'test/messages.foo',
         contents: new Buffer(''),
       });
 
       const converter = i18next();
-      converter.on('error', err => {
+      converter.on('error', (err) => {
         expect(err.message).to.equal('Cannot determine which which file to convert to.');
         done();
       })
       .write(fooFile);
     });
 
-    it('should throw error on non-valid gettextFormat', done => {
+    it('should throw error on non-valid gettextFormat', (done) => {
       const jsonFile = new File({
         path: 'test/messages.json',
         contents: new Buffer(''),
       });
 
       const converter = i18next({ gettextFormat: 'foo' });
-      converter.on('error', err => {
+      converter.on('error', (err) => {
         expect(err.message).to.equal('Cannot determine which which file to convert to.');
         done();
       })
@@ -211,7 +211,7 @@ describe('gulp-i18next-conv', () => {
   });
 
   describe('options', () => {
-    it('should correctly determine domain with the default option', done => {
+    it('should correctly determine domain with the default option', (done) => {
       const defDetermineDomain = sinon.spy(i18next.__get__('defDetermineDomain'));
       i18next.__with__({
         defDetermineDomain,
@@ -226,7 +226,7 @@ describe('gulp-i18next-conv', () => {
         const converter = i18next();
 
         // wait for the file to come back out
-        converter.once('data', file => {
+        converter.once('data', (file) => {
           // make sure it came out the same way it went in
           expect(file.isBuffer()).to.equal(true);
           expect(defDetermineDomain).to.be.calledOnce();
@@ -238,7 +238,7 @@ describe('gulp-i18next-conv', () => {
       });
     });
 
-    it('should use option keyasareference', done => {
+    it('should use option keyasareference', (done) => {
       // create the fake file
       const poFile = new File({
         path: 'test/messages.po',
@@ -252,7 +252,7 @@ describe('gulp-i18next-conv', () => {
       });
 
       // wait for the file to come back out
-      converter.once('data', file => {
+      converter.once('data', (file) => {
         // make sure it came out the same way it went in
         expect(file.isBuffer()).to.be.true();
         expect(path.basename(file.path)).to.equal('messages.json');

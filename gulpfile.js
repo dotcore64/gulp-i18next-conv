@@ -8,9 +8,9 @@ const compiler = require('babel-register');
 const src = 'src/index.js';
 
 gulp.task('lint', () =>
-  gulp.src(src)
+  gulp.src([src, 'test/*.js'])
   .pipe(eslint())
-  .pipe(eslint.format())
+  .pipe(eslint.format()),
 );
 
 gulp.task('test', ['lint'], () => (
