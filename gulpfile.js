@@ -6,11 +6,11 @@ const eslint = require('gulp-eslint');
 
 const src = 'src/index.js';
 
-gulp.task('lint', () =>
+gulp.task('lint', () => (
   gulp.src([src, 'test/*.js'])
   .pipe(eslint())
-  .pipe(eslint.format()),
-);
+  .pipe(eslint.format())
+));
 
 gulp.task('test', ['lint'], () => (
   gulp.src('test')
