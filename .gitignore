@@ -10,3 +10,5 @@ npm-debug.log
 
 # Build
 dist
+
+.nyc_output
