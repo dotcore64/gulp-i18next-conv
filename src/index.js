@@ -102,5 +102,5 @@ function gulpGettextConv({
 }
 
 // exporting the plugin main function
-module.exports = gulpGettextConv;
-module.exports.determineLocale = defDetermineLocale;
+export default gulpGettextConv;
+export { defDetermineLocale as determineLocale };

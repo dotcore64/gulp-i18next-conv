@@ -1,17 +1,16 @@
 import File from 'vinyl';
 import { PassThrough } from 'stream';
 
-import rewire from 'rewire';
-import sinon from 'sinon';
+import { spy, stub } from 'sinon';
 import path from 'path';
 import es from 'event-stream';
 import chai, { expect } from 'chai';
 import { readFileSync } from 'fs';
 
+import i18next, { determineLocale as defDetermineLocale } from '../src';
+
 chai.use(require('sinon-chai'));
 chai.use(require('dirty-chai'));
-
-const i18next = rewire('../src');
 
 const testFile = readFileSync('test/messages.po');
 const expectedJSON = readFileSync('test/messages.json').slice(0, -1);
@@ -166,8 +165,8 @@ describe('gulp-i18next-conv', () => {
         contents: null,
       });
 
-      const stub = sinon.stub(poFile, 'isNull');
-      stub.returns(false);
+      stub(poFile, 'isNull');
+      poFile.isNull.returns(false);
 
       // Create a prefixer plugin stream
       const converter = i18next({
@@ -221,29 +220,29 @@ describe('gulp-i18next-conv', () => {
 
   describe('options', () => {
     it('should correctly determine domain with the default option', (done) => {
-      const defDetermineLocale = sinon.spy(i18next.__get__('defDetermineLocale'));
-      i18next.__with__({
-        defDetermineLocale,
-      })(() => {
-        // create the fake file
-        const poFile = new File({
-          path: 'test/messages.po',
-          contents: Buffer.from(''),
-        });
+      const determineLocale = spy(i18next.__GetDependency__('defDetermineLocale'));
+      i18next.__Rewire__('defDetermineLocale', determineLocale);
 
-        // Create a prefixer plugin stream
-        const converter = i18next();
-
-        // wait for the file to come back out
-        converter.once('data', (file) => {
-          // make sure it came out the same way it went in
-          expect(file.isBuffer()).to.equal(true);
-          expect(defDetermineLocale).to.be.calledOnce();
-          expect(defDetermineLocale).to.have.returned('test');
-
-          done();
-        }).write(poFile);
+      // create the fake file
+      const poFile = new File({
+        path: 'test/messages.po',
+        contents: Buffer.from(''),
       });
+
+      // Create a prefixer plugin stream
+      const converter = i18next();
+
+      // wait for the file to come back out
+      converter.once('data', (file) => {
+        // make sure it came out the same way it went in
+        expect(file.isBuffer()).to.equal(true);
+        expect(determineLocale).to.be.calledOnce();
+        expect(determineLocale).to.have.returned('test');
+
+        done();
+      }).write(poFile);
+
+      i18next.__ResetDependency__('defDetermineLocale');
     });
 
     it('should use option keyasareference', (done) => {
@@ -274,7 +273,6 @@ describe('gulp-i18next-conv', () => {
 
   describe('named exports', () => {
     it('should correctly determine domain with exported determineLocale', () => {
-      const defDetermineLocale = i18next.determineLocale;
       expect(defDetermineLocale('foo/bar')).to.equal('foo');
     });
   });

@@ -4,5 +4,5 @@ module.exports = api => ({
       targets: api.env() === 'test' ? { node: 'current' } : { node: '6' },
     }],
   ],
-  plugins: api.env() === 'test' ? ['istanbul', '@babel/transform-block-scoping'] : [],
+  plugins: api.env() === 'test' ? ['istanbul', 'rewire'] : [],
 })
