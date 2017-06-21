@@ -35,7 +35,7 @@
     "i18next-conv": "^4.0.0",
     "pkginfo": "^0.4.0",
     "through2": "^2.0.3",
-    "vinyl-contents-tostring": "1.0.0"
+    "vinyl-contents-tostring": "^1.0.0"
   },
   "devDependencies": {
     "babel-plugin-istanbul": "^4.1.4",
@@ -53,7 +53,6 @@
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^3.0.1",
     "gulp-mocha": "^4.3.1",
-    "mocha": "^3.4.2",
     "nyc": "^11.0.2",
     "rewire": "^2.5.2",
     "sinon": "^2.3.5",
