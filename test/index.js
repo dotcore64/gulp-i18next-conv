@@ -33,7 +33,7 @@ describe('gulp-i18next-conv', () => {
 
       // Create a prefixer plugin stream
       const converter = i18next({
-        determineDomain: () => 'en',
+        determineLocale: () => 'en',
       });
       converter.write(poFile);
 
@@ -63,7 +63,7 @@ describe('gulp-i18next-conv', () => {
 
       // Create a prefixer plugin stream
       const converter = i18next({
-        determineDomain: () => 'en',
+        determineLocale: () => 'en',
       });
       converter.write(poFile);
 
@@ -90,7 +90,7 @@ describe('gulp-i18next-conv', () => {
 
       // Create a prefixer plugin stream
       const converter = i18next({
-        determineDomain: () => 'en',
+        determineLocale: () => 'en',
       });
       converter.write(poFile);
 
@@ -109,7 +109,7 @@ describe('gulp-i18next-conv', () => {
       });
 
       const converter = i18next({
-        determineDomain: () => 'en',
+        determineLocale: () => 'en',
         noDate: true,
       });
       converter.write(jsonFile);
@@ -127,7 +127,7 @@ describe('gulp-i18next-conv', () => {
       });
 
       const converter = i18next({
-        determineDomain: () => 'en',
+        determineLocale: () => 'en',
         gettextFormat: 'pot',
         noDate: true,
       });
@@ -146,7 +146,7 @@ describe('gulp-i18next-conv', () => {
       });
 
       const converter = i18next({
-        determineDomain: () => 'en',
+        determineLocale: () => 'en',
         gettextFormat: 'mo',
         noDate: true,
       });
@@ -172,7 +172,7 @@ describe('gulp-i18next-conv', () => {
 
       // Create a prefixer plugin stream
       const converter = i18next({
-        determineDomain: () => 'en',
+        determineLocale: () => 'en',
       });
       converter.on('error', (err) => {
         expect(err.message).to.equal('Invalid file');
@@ -209,15 +209,15 @@ describe('gulp-i18next-conv', () => {
       .write(jsonFile);
     });
 
-    it('should throw error if determineDomain fails', (done) => {
+    it('should throw error if determineLocale fails', (done) => {
       const jsonFile = new File({
         path: 'test/messages.json',
         contents: new Buffer(''),
       });
 
-      const converter = i18next({ determineDomain() { throw new Error('determine domain failed'); } });
+      const converter = i18next({ determineLocale() { throw new Error('determine domain failed'); } });
       converter.on('error', (err) => {
-        expect(err.message).to.equal('determineDomain failed');
+        expect(err.message).to.equal('determineLocale failed');
         done();
       })
       .write(jsonFile);
@@ -226,9 +226,9 @@ describe('gulp-i18next-conv', () => {
 
   describe('options', () => {
     it('should correctly determine domain with the default option', (done) => {
-      const defDetermineDomain = sinon.spy(i18next.__get__('defDetermineDomain'));
+      const defDetermineLocale = sinon.spy(i18next.__get__('defDetermineLocale'));
       i18next.__with__({
-        defDetermineDomain,
+        defDetermineLocale,
       })(() => {
         // create the fake file
         const poFile = new File({
@@ -243,8 +243,8 @@ describe('gulp-i18next-conv', () => {
         converter.once('data', (file) => {
           // make sure it came out the same way it went in
           expect(file.isBuffer()).to.equal(true);
-          expect(defDetermineDomain).to.be.calledOnce();
-          expect(defDetermineDomain).to.have.returned('test');
+          expect(defDetermineLocale).to.be.calledOnce();
+          expect(defDetermineLocale).to.have.returned('test');
 
           done();
         })
@@ -261,7 +261,7 @@ describe('gulp-i18next-conv', () => {
 
       // Create a prefixer plugin stream
       const converter = i18next({
-        determineDomain: () => 'en',
+        determineLocale: () => 'en',
         keyasareference: true,
       });
 
@@ -284,9 +284,9 @@ describe('gulp-i18next-conv', () => {
       expect(i18next.version).to.equal(pkg.version);
     });
 
-    it('should correctly determine domain with exported determineDomain', () => {
-      const defDetermineDomain = i18next.determineDomain;
-      expect(defDetermineDomain('foo/bar')).to.equal('foo');
+    it('should correctly determine domain with exported determineLocale', () => {
+      const defDetermineLocale = i18next.determineLocale;
+      expect(defDetermineLocale('foo/bar')).to.equal('foo');
     });
   });
 });

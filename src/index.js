@@ -12,7 +12,7 @@ import {
 } from 'i18next-conv';
 
 const PLUGIN_NAME = 'gulp-i18next-conv';
-const defDetermineDomain = filename => filename.match(/^\/?([^/]+)\//)[1];
+const defDetermineLocale = filename => filename.match(/^\/?([^/]+)\//)[1];
 
 function getConverter(file, gettextFormat) {
   switch (path.extname(file.path)) { // file.extname doesn't work in older vinyl used by gulp 3
@@ -38,7 +38,7 @@ function getConverter(file, gettextFormat) {
 
 // plugin level function (dealing with files)
 function gulpGettextConv({
-  determineDomain = defDetermineDomain,
+  determineLocale = defDetermineLocale,
   gettextFormat = 'po',
   ...options
 } = {}) {
@@ -61,10 +61,10 @@ function gulpGettextConv({
     return vinylToString(file, enc)
     .then((contents) => {
       try {
-        const domain = determineDomain(file.relative, contents);
+        const domain = determineLocale(file.relative, contents);
         return converter(domain, contents, options);
       } catch (e) {
-        throw new PluginError(PLUGIN_NAME, 'determineDomain failed', { showStack: true });
+        throw new PluginError(PLUGIN_NAME, 'determineLocale failed', { showStack: true });
       }
     })
     .then((data) => {
@@ -95,6 +95,6 @@ function gulpGettextConv({
 
 // exporting the plugin main function
 module.exports = gulpGettextConv;
-module.exports.determineDomain = defDetermineDomain;
+module.exports.determineLocale = defDetermineLocale;
 
 pkginfo(module, ['version']);
