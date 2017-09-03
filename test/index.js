@@ -58,7 +58,7 @@ describe('gulp-i18next-conv', () => {
       // create the fake file
       const poFile = new File({
         path: 'test/messages.po',
-        contents: new Buffer(testFile),
+        contents: Buffer.from(testFile),
       });
 
       // Create a prefixer plugin stream
@@ -105,7 +105,7 @@ describe('gulp-i18next-conv', () => {
     it('should convert json to po', (done) => {
       const jsonFile = new File({
         path: 'test/messages.json',
-        contents: new Buffer(expectedJSON),
+        contents: Buffer.from(expectedJSON),
       });
 
       const converter = i18next({
@@ -123,7 +123,7 @@ describe('gulp-i18next-conv', () => {
     it('should convert json to pot', (done) => {
       const jsonFile = new File({
         path: 'test/messages.json',
-        contents: new Buffer(expectedJSON),
+        contents: Buffer.from(expectedJSON),
       });
 
       const converter = i18next({
@@ -142,7 +142,7 @@ describe('gulp-i18next-conv', () => {
     it('should convert json to mo', (done) => {
       const jsonFile = new File({
         path: 'test/messages.json',
-        contents: new Buffer(expectedJSON),
+        contents: Buffer.from(expectedJSON),
       });
 
       const converter = i18next({
@@ -177,50 +177,46 @@ describe('gulp-i18next-conv', () => {
       converter.on('error', (err) => {
         expect(err.message).to.equal('Invalid file');
         done();
-      })
-      .write(poFile);
+      }).write(poFile);
     });
 
     it('should throw error on non gettext or json file', (done) => {
       const fooFile = new File({
         path: 'test/messages.foo',
-        contents: new Buffer(''),
+        contents: Buffer.from(''),
       });
 
       const converter = i18next();
       converter.on('error', (err) => {
         expect(err.message).to.equal('Cannot determine which which file to convert to.');
         done();
-      })
-      .write(fooFile);
+      }).write(fooFile);
     });
 
     it('should throw error on non-valid gettextFormat', (done) => {
       const jsonFile = new File({
         path: 'test/messages.json',
-        contents: new Buffer(''),
+        contents: Buffer.from(''),
       });
 
       const converter = i18next({ gettextFormat: 'foo' });
       converter.on('error', (err) => {
         expect(err.message).to.equal('Cannot determine which which file to convert to.');
         done();
-      })
-      .write(jsonFile);
+      }).write(jsonFile);
     });
 
     it('should throw error if determineLocale fails', (done) => {
       const jsonFile = new File({
         path: 'test/messages.json',
-        contents: new Buffer(''),
+        contents: Buffer.from(''),
       });
 
       const converter = i18next({ determineLocale() { throw new Error('determine domain failed'); } });
       converter.on('error', (err) => {
         expect(err.message).to.equal('determineLocale failed');
         done();
-      })
-      .write(jsonFile);
+      }).write(jsonFile);
     });
   });
 
@@ -233,7 +229,7 @@ describe('gulp-i18next-conv', () => {
         // create the fake file
         const poFile = new File({
           path: 'test/messages.po',
-          contents: new Buffer(''),
+          contents: Buffer.from(''),
         });
 
         // Create a prefixer plugin stream
@@ -247,8 +243,7 @@ describe('gulp-i18next-conv', () => {
           expect(defDetermineLocale).to.have.returned('test');
 
           done();
-        })
-        .write(poFile);
+        }).write(poFile);
       });
     });
 
@@ -256,7 +251,7 @@ describe('gulp-i18next-conv', () => {
       // create the fake file
       const poFile = new File({
         path: 'test/messages.po',
-        contents: new Buffer(testFile),
+        contents: Buffer.from(testFile),
       });
 
       // Create a prefixer plugin stream
@@ -274,8 +269,7 @@ describe('gulp-i18next-conv', () => {
         // buffer the contents to make sure it got prepended to
         expect(file.contents.toString()).to.equal('{\n    "lib/error.c:116": "bar"\n}');
         done();
-      })
-      .write(poFile);
+      }).write(poFile);
     });
   });
 

@@ -59,37 +59,37 @@ function gulpGettextConv({
     }
 
     return vinylToString(file, enc)
-    .then((contents) => {
-      try {
-        const domain = determineLocale(file.relative, contents);
-        return converter(domain, contents, options);
-      } catch (e) {
-        throw new PluginError(PLUGIN_NAME, 'determineLocale failed', { showStack: true });
-      }
-    })
-    .then((data) => {
-      const newFile = file.clone();
-      const dirname = path.dirname(file.path);
-      const basename = path.basename(file.path, path.extname(file.path));
+      .then((contents) => {
+        try {
+          const domain = determineLocale(file.relative, contents);
+          return converter(domain, contents, options);
+        } catch (e) {
+          throw new PluginError(PLUGIN_NAME, 'determineLocale failed', { showStack: true });
+        }
+      })
+      .then((data) => {
+        const newFile = file.clone();
+        const dirname = path.dirname(file.path);
+        const basename = path.basename(file.path, path.extname(file.path));
 
-      newFile.path = path.join(dirname, `${basename}${ext}`);
+        newFile.path = path.join(dirname, `${basename}${ext}`);
 
-      if (file.isBuffer()) {
-        newFile.contents = new Buffer(data);
-      } else if (file.isStream()) {
-        newFile.contents.write(data);
-        newFile.contents.end();
-      } else { // In case vinyl accepts new file types in the future
-        throw new Error('Invalid file');
-      }
+        if (file.isBuffer()) {
+          newFile.contents = Buffer.from(data);
+        } else if (file.isStream()) {
+          newFile.contents.write(data);
+          newFile.contents.end();
+        } else { // In case vinyl accepts new file types in the future
+          throw new Error('Invalid file');
+        }
 
-      // make sure the file goes through the next gulp plugin
-      this.push(newFile);
-      cb();
-    })
-    .catch((err) => {
-      cb(new PluginError(PLUGIN_NAME, err.message));
-    });
+        // make sure the file goes through the next gulp plugin
+        this.push(newFile);
+        cb();
+      })
+      .catch((err) => {
+        cb(new PluginError(PLUGIN_NAME, err.message));
+      });
   });
 }
 
