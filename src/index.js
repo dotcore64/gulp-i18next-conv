@@ -60,8 +60,12 @@ function gulpGettextConv({
 
     return vinylToString(file, enc)
     .then((contents) => {
-      const domain = determineDomain(file.relative, contents);
-      return converter(domain, contents, options);
+      try {
+        const domain = determineDomain(file.relative, contents);
+        return converter(domain, contents, options);
+      } catch (e) {
+        throw new PluginError(PLUGIN_NAME, 'determineDomain failed', { showStack: true });
+      }
     })
     .then((data) => {
       const newFile = file.clone();

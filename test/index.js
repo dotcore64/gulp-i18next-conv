@@ -208,6 +208,20 @@ describe('gulp-i18next-conv', () => {
       })
       .write(jsonFile);
     });
+
+    it('should throw error if determineDomain fails', (done) => {
+      const jsonFile = new File({
+        path: 'test/messages.json',
+        contents: new Buffer(''),
+      });
+
+      const converter = i18next({ determineDomain() { throw new Error('determine domain failed'); } });
+      converter.on('error', (err) => {
+        expect(err.message).to.equal('determineDomain failed');
+        done();
+      })
+      .write(jsonFile);
+    });
   });
 
   describe('options', () => {
