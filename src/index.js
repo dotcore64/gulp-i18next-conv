@@ -12,7 +12,7 @@ import {
 } from 'i18next-conv';
 
 const PLUGIN_NAME = 'gulp-i18next-conv';
-const defDetermineLocale = filename => filename.match(/^\/?([^/]+)\//)[1];
+const defDetermineLocale = filename => filename.replace(/\\/g,"/").match(/^\/?([^/]+)\//)[1];
 
 function getConverter(file, gettextFormat) {
   switch (path.extname(file.path)) { // file.extname doesn't work in older vinyl used by gulp 3
