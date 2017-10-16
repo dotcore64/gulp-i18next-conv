@@ -32,7 +32,7 @@
   "homepage": "https://github.com/perrin4869/gulp-i18next-conv#readme",
   "dependencies": {
     "gulp-util": "^3.0.8",
-    "i18next-conv": "^4.1.0",
+    "i18next-conv": "^5.0.0",
     "pkginfo": "^0.4.1",
     "through2": "^2.0.3",
     "vinyl-contents-tostring": "^1.0.0"
