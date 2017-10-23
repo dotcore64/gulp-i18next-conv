@@ -10,5 +10,7 @@ deploy:
   provider: npm
   on:
     tags: true
-after_script:
+script:
+- npm test
+after_success:
 - npm run coveralls
