@@ -5,6 +5,6 @@ module.exports = {
   presets: [['@babel/env', { targets }]],
   plugins: [
     '@babel/proposal-object-rest-spread',
-    ...env === 'test' ? ['istanbul'] : [],
+    ...env === 'test' ? ['istanbul', '@babel/transform-block-scoping'] : [],
   ],
 }
