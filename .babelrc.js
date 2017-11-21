@@ -2,9 +2,9 @@ const env = process.env.NODE_ENV || 'production';
 const targets = env === 'test' ? { node: 'current' } : { node: '4' };
 
 module.exports = {
-  presets: [['env', { targets }]],
+  presets: [['@babel/env', { targets }]],
   plugins: [
-    'transform-object-rest-spread',
+    '@babel/proposal-object-rest-spread',
     ...env === 'test' ? ['istanbul'] : [],
   ],
 }
