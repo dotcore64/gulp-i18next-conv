@@ -41,7 +41,7 @@ Converting i18next `json` to gettext formats, `po`, `pot` and `mo` is supported 
 
 #### determineLocale
 
-Type: `function(filename, contents)` optional, default: `filename => filename.match(/^\/?([^\/]+)\//)[1]`
+Type: `function(filename, contents)` optional, default: `filename => filename.split(path.sep)[0]`
 
 Function that can be used to determine the locale of the file being translated. Gets the relative path of the file, and its contents. By default it is the name of the first directory specified by a glob. For example, in the example above `locale/*/LC_MESSAGES/*.po`, the contents of the first `*` will be used as the locale name.
 
@@ -59,7 +59,7 @@ Any remaining properties will be passed to the [i18next-conv](https://github.com
 
 ### determineLocale
 
-The default determineLocale, `filename => filename.match(/^\/?([^\/]+)\//)[1]`
+The default determineLocale, `filename => filename.split(path.sep)[0]`, where `path` is the [Node.js path module](https://nodejs.org/api/path.html).
 
 ## License
 
