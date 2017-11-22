@@ -1,7 +1,6 @@
 import { PluginError } from 'gulp-util';
 
 import through from 'through2';
-import pkginfo from 'pkginfo';
 import path from 'path';
 import vinylToString from 'vinyl-contents-tostring';
 import {
@@ -96,5 +95,3 @@ function gulpGettextConv({
 // exporting the plugin main function
 module.exports = gulpGettextConv;
 module.exports.determineLocale = defDetermineLocale;
-
-pkginfo(module, ['version']);

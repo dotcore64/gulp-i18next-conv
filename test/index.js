@@ -12,7 +12,6 @@ chai.use(require('sinon-chai'));
 chai.use(require('dirty-chai'));
 
 const i18next = rewire('../src');
-const pkg = require('../package.json');
 
 const testFile = readFileSync('test/messages.po');
 const expectedJSON = readFileSync('test/messages.json').slice(0, -1);
@@ -274,10 +273,6 @@ describe('gulp-i18next-conv', () => {
   });
 
   describe('named exports', () => {
-    it('should export correct metadata', () => {
-      expect(i18next.version).to.equal(pkg.version);
-    });
-
     it('should correctly determine domain with exported determineLocale', () => {
       const defDetermineLocale = i18next.determineLocale;
       expect(defDetermineLocale('foo/bar')).to.equal('foo');
