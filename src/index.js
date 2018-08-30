@@ -1,5 +1,4 @@
-import { PluginError } from 'gulp-util';
-
+import PluginError from 'plugin-error';
 import through from 'through2';
 import path from 'path';
 import vinylToString from 'vinyl-contents-tostring';
@@ -35,6 +34,23 @@ function getConverter(file, gettextFormat) {
   }
 }
 
+function getContents(file, data) {
+  if (file.isBuffer()) {
+    return Buffer.from(data);
+  }
+
+  if (file.isStream()) {
+    const contents = through();
+    contents.write(data);
+    contents.end();
+
+    return contents;
+  }
+
+  // In case vinyl accepts new file types in the future
+  throw new Error('Invalid file');
+}
+
 // plugin level function (dealing with files)
 function gulpGettextConv({
   determineLocale = defDetermineLocale,
@@ -67,23 +83,16 @@ function gulpGettextConv({
         }
       })
       .then((data) => {
-        const newFile = file.clone();
         const dirname = path.dirname(file.path);
         const basename = path.basename(file.path, path.extname(file.path));
 
-        newFile.path = path.join(dirname, `${basename}${ext}`);
-
-        if (file.isBuffer()) {
-          newFile.contents = Buffer.from(data);
-        } else if (file.isStream()) {
-          newFile.contents.write(data);
-          newFile.contents.end();
-        } else { // In case vinyl accepts new file types in the future
-          throw new Error('Invalid file');
-        }
+        Object.assign(file, {
+          path: path.join(dirname, `${basename}${ext}`),
+          contents: getContents(file, data),
+        });
 
         // make sure the file goes through the next gulp plugin
-        this.push(newFile);
+        this.push(file);
         cb();
       })
       .catch((err) => {
