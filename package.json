@@ -52,15 +52,11 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "event-stream": "^3.3.4",
-    "mocha": "^4.0.1",
-    "nyc": "^11.2.1",
-    "rewire": "^2.5.2",
-    "sinon": "^4.0.1",
-    "sinon-chai": "^2.14.0",
+    "mocha": "^5.2.0",
+    "nyc": "^13.0.1",
+    "rewire": "^4.0.1",
+    "sinon": "^6.1.5",
+    "sinon-chai": "^3.2.0",
     "vinyl": "^2.2.0"
-  },
-  "nyc": {
-    "sourceMap": false,
-    "instrument": false
   }
 }
