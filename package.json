@@ -7,13 +7,13 @@
     "lint": "eslint 'src/*.js' 'test/*.js'",
     "pretest": "npm run lint",
     "test": "mocha",
-    "build": "babel src -d dist",
+    "build": "babel src -d lib",
     "cover": "nyc npm test",
     "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls",
     "prepare": "npm run test && npm run build"
   },
   "files": [
-    "dist"
+    "lib"
   ],
   "repository": {
     "type": "git",
