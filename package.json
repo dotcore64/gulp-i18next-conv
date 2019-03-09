@@ -33,7 +33,6 @@
   },
   "homepage": "https://github.com/perrin4869/gulp-i18next-conv#readme",
   "dependencies": {
-    "babel-plugin-rewire": "^1.2.0",
     "plugin-error": "^1.0.1",
     "through2": "^3.0.1",
     "vinyl-contents-tostring": "^2.0.1"
@@ -44,6 +43,7 @@
     "@babel/preset-env": "^7.3.4",
     "@babel/register": "^7.0.0",
     "babel-plugin-istanbul": "^5.1.1",
+    "babel-plugin-rewire": "^1.2.0",
     "chai": "^4.2.0",
     "coveralls": "^3.0.3",
     "dirty-chai": "^2.0.1",
