@@ -11,7 +11,7 @@
 ## Install
 
 ```
-$ npm install --save-dev gulp-i18next-conv
+$ npm install --save-dev i18next-conv gulp-i18next-conv
 ```
 
 
