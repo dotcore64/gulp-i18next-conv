@@ -1,6 +1,8 @@
 import PluginError from 'plugin-error';
 import through from 'through2';
-import path from 'path';
+import {
+  sep, extname, dirname, basename, join,
+} from 'path';
 import vinylToString from 'vinyl-contents-tostring';
 import {
   gettextToI18next,
@@ -10,10 +12,10 @@ import {
 } from 'i18next-conv';
 
 const PLUGIN_NAME = 'gulp-i18next-conv';
-const defDetermineLocale = filename => filename.split(path.sep)[0];
+const defDetermineLocale = (filename) => filename.split(sep)[0];
 
 function getConverter(file, gettextFormat) {
-  switch (path.extname(file.path)) { // file.extname doesn't work in older vinyl used by gulp 3
+  switch (extname(file.path)) { // file.extname doesn't work in older vinyl used by gulp 3
     case '.po':
     case '.pot':
     case '.mo':
@@ -83,11 +85,13 @@ function gulpGettextConv({
         }
       })
       .then((data) => {
-        const dirname = path.dirname(file.path);
-        const basename = path.basename(file.path, path.extname(file.path));
+        const path = join(
+          dirname(file.path),
+          `${basename(file.path, extname(file.path))}${ext}`,
+        );
 
         Object.assign(file, {
-          path: path.join(dirname, `${basename}${ext}`),
+          path,
           contents: getContents(file, data),
         });
 
