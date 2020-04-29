@@ -1,9 +1,8 @@
 import PluginError from 'plugin-error';
 import through from 'through2';
-import {
-  sep, extname, dirname, basename, join,
-} from 'path';
+import { sep, extname } from 'path';
 import vinylToString from 'vinyl-contents-tostring';
+import asCallback from 'standard-as-callback';
 import {
   gettextToI18next,
   i18nextToPo,
@@ -29,29 +28,18 @@ function getConverter(file, gettextFormat) {
         case 'mo':
           return [i18nextToMo, '.mo'];
         default:
-          throw new PluginError(PLUGIN_NAME, 'Cannot determine which which file to convert to.');
+          throw new Error('Cannot determine which which file to convert to.');
       }
     default:
-      throw new PluginError(PLUGIN_NAME, 'Cannot determine which which file to convert to.');
+      throw new Error('Cannot determine which which file to convert to.');
   }
 }
 
-function getContents(file, data) {
-  if (file.isBuffer()) {
-    return Buffer.from(data);
-  }
-
-  if (file.isStream()) {
-    const contents = through();
-    contents.write(data);
-    contents.end();
-
-    return contents;
-  }
-
-  // In case vinyl accepts new file types in the future
-  throw new Error('Invalid file');
-}
+const getContents = (file, data) => (file.isBuffer() // eslint-disable-line no-nested-ternary
+  ? Buffer.from(data)
+  : file.isStream()
+    ? through().end(data)
+    : throw new Error('Invalid file'));
 
 export default ({
   determineLocale = defDetermineLocale,
@@ -69,35 +57,27 @@ export default ({
   try {
     [converter, ext] = getConverter(file, gettextFormat);
   } catch (err) {
-    return cb(err);
+    return cb(new PluginError(PLUGIN_NAME, err.message));
   }
 
-  return vinylToString(file, enc)
+  return asCallback(vinylToString(file, enc)
     .then((contents) => {
+      let domain;
+
       try {
-        const domain = determineLocale(file.relative, contents);
-        return converter(domain, contents, options);
+        domain = determineLocale(file.relative, contents);
       } catch (e) {
-        throw new PluginError(PLUGIN_NAME, 'determineLocale failed', { showStack: true });
+        return Promise.reject(new Error('determineLocale failed'));
       }
-    })
-    .then((data) => {
-      const path = join(
-        dirname(file.path),
-        `${basename(file.path, extname(file.path))}${ext}`,
-      );
 
-      Object.assign(file, {
-        path,
-        contents: getContents(file, data),
-      });
-
-      // make sure the file goes through the next gulp plugin
-      this.push(file);
-      cb();
+      return converter(domain, contents, options);
     })
-    .catch((err) => {
-      cb(new PluginError(PLUGIN_NAME, err.message));
-    });
+    .then((data) => Object.assign(file, {
+      extname: ext,
+      contents: getContents(file, data),
+    }))
+    .then(() => { this.push(file); })
+    .catch((err) => Promise.reject(new PluginError(PLUGIN_NAME, err.message, { showStack: true }))),
+  cb);
 });
 export { defDetermineLocale as determineLocale };
