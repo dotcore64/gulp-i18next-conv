@@ -1,8 +1,7 @@
-module.exports = api => ({
-  presets: [
-    ['@babel/env', {
-      targets: { node: api.env('test') ? 'current' : '10' },
-    }],
-  ],
-  plugins: api.env('test') ? ['istanbul', 'rewire'] : [],
-})
+module.exports = ({ env }) => env('test')
+  ? {
+    plugins: ['istanbul', 'rewire'],
+  }
+  : {
+    presets: [['@babel/env', { targets: { node: '10' } }]],
+  };

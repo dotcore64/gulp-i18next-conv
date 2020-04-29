@@ -53,58 +53,51 @@ function getContents(file, data) {
   throw new Error('Invalid file');
 }
 
-// plugin level function (dealing with files)
-function gulpGettextConv({
+export default ({
   determineLocale = defDetermineLocale,
   gettextFormat = 'po',
   ...options
-} = {}) {
-  // creating a stream through which each file will pass
-  return through.obj(function (file, enc, cb) {
-    if (file.isNull()) {
-      this.push(file);
-      return cb();
-    }
+} = {}) => through.obj(function (file, enc, cb) {
+  if (file.isNull()) {
+    this.push(file);
+    return cb();
+  }
 
-    let converter;
-    let ext;
+  let converter;
+  let ext;
 
-    try {
-      [converter, ext] = getConverter(file, gettextFormat);
-    } catch (err) {
-      return cb(err);
-    }
+  try {
+    [converter, ext] = getConverter(file, gettextFormat);
+  } catch (err) {
+    return cb(err);
+  }
 
-    return vinylToString(file, enc)
-      .then((contents) => {
-        try {
-          const domain = determineLocale(file.relative, contents);
-          return converter(domain, contents, options);
-        } catch (e) {
-          throw new PluginError(PLUGIN_NAME, 'determineLocale failed', { showStack: true });
-        }
-      })
-      .then((data) => {
-        const path = join(
-          dirname(file.path),
-          `${basename(file.path, extname(file.path))}${ext}`,
-        );
+  return vinylToString(file, enc)
+    .then((contents) => {
+      try {
+        const domain = determineLocale(file.relative, contents);
+        return converter(domain, contents, options);
+      } catch (e) {
+        throw new PluginError(PLUGIN_NAME, 'determineLocale failed', { showStack: true });
+      }
+    })
+    .then((data) => {
+      const path = join(
+        dirname(file.path),
+        `${basename(file.path, extname(file.path))}${ext}`,
+      );
 
-        Object.assign(file, {
-          path,
-          contents: getContents(file, data),
-        });
-
-        // make sure the file goes through the next gulp plugin
-        this.push(file);
-        cb();
-      })
-      .catch((err) => {
-        cb(new PluginError(PLUGIN_NAME, err.message));
+      Object.assign(file, {
+        path,
+        contents: getContents(file, data),
       });
-  });
-}
 
-// exporting the plugin main function
-export default gulpGettextConv;
+      // make sure the file goes through the next gulp plugin
+      this.push(file);
+      cb();
+    })
+    .catch((err) => {
+      cb(new PluginError(PLUGIN_NAME, err.message));
+    });
+});
 export { defDetermineLocale as determineLocale };
