@@ -1,16 +1,15 @@
-import File from 'vinyl';
-import { PassThrough } from 'stream';
+const File = require('vinyl');
+const { PassThrough } = require('stream');
 
-import { spy, stub } from 'sinon';
-import path from 'path';
-import es from 'event-stream';
-import chai, { expect } from 'chai';
-import { readFileSync } from 'fs';
+const { spy, stub } = require('sinon');
+const { basename } = require('path');
+const es = require('event-stream');
+const { expect } = require('chai');
+const { readFileSync } = require('fs');
 
-import i18next, { determineLocale as defDetermineLocale } from '../src';
+const i18next = require('..');
 
-chai.use(require('sinon-chai'));
-chai.use(require('dirty-chai'));
+const { determineLocale: defDetermineLocale } = i18next;
 
 const testFile = readFileSync('test/messages.po');
 const expectedJSON = readFileSync('test/messages.json').slice(0, -1);
@@ -39,7 +38,7 @@ describe('gulp-i18next-conv', () => {
       converter.once('data', (file) => {
         // make sure it came out the same way it went in
         expect(file.isStream()).to.be.true();
-        expect(path.basename(file.path)).to.equal('messages.json');
+        expect(basename(file.path)).to.equal('messages.json');
 
         // buffer the contents to make sure it got prepended to
         file.contents.pipe(es.wait((err, data) => {
@@ -69,7 +68,7 @@ describe('gulp-i18next-conv', () => {
       converter.once('data', (file) => {
         // make sure it came out the same way it went in
         expect(file.isBuffer()).to.equal(true);
-        expect(path.basename(file.path)).to.equal('messages.json');
+        expect(basename(file.path)).to.equal('messages.json');
 
         // buffer the contents to make sure it got prepended to
         expect(file.contents).to.deep.equal(expectedJSON);
@@ -262,7 +261,7 @@ describe('gulp-i18next-conv', () => {
       converter.once('data', (file) => {
         // make sure it came out the same way it went in
         expect(file.isBuffer()).to.be.true();
-        expect(path.basename(file.path)).to.equal('messages.json');
+        expect(basename(file.path)).to.equal('messages.json');
 
         // buffer the contents to make sure it got prepended to
         expect(file.contents.toString()).to.equal('{\n    "lib/error.c:116": "bar"\n}');

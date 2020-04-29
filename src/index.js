@@ -1,14 +1,15 @@
-import PluginError from 'plugin-error';
-import through from 'through2';
-import { sep, extname } from 'path';
-import vinylToString from 'vinyl-contents-tostring';
-import asCallback from 'standard-as-callback';
-import {
+const { sep, extname } = require('path');
+
+const PluginError = require('plugin-error');
+const through = require('through2');
+const vinylToString = require('vinyl-contents-tostring');
+const asCallback = require('standard-as-callback').default;
+const {
   gettextToI18next,
   i18nextToPo,
   i18nextToPot,
   i18nextToMo,
-} from 'i18next-conv';
+} = require('i18next-conv');
 
 const PLUGIN_NAME = 'gulp-i18next-conv';
 const defDetermineLocale = (filename) => filename.split(sep)[0];
@@ -41,7 +42,7 @@ const getContents = (file, data) => (file.isBuffer() // eslint-disable-line no-n
     ? through().end(data)
     : throw new Error('Invalid file'));
 
-export default ({
+module.exports = ({
   determineLocale = defDetermineLocale,
   gettextFormat = 'po',
   ...options
@@ -80,4 +81,4 @@ export default ({
     .catch((err) => Promise.reject(new PluginError(PLUGIN_NAME, err.message, { showStack: true }))),
   cb);
 });
-export { defDetermineLocale as determineLocale };
+module.exports.determineLocale = defDetermineLocale;
