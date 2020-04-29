@@ -1,9 +1,3 @@
-const plugins = ['@babel/proposal-throw-expressions'];
-
 module.exports = ({ env }) => env('test')
-  ? {
-    plugins: [...plugins, 'istanbul', 'rewire'],
-  }
-  : {
-    plugins,
-  };
+  ? { plugins: ['istanbul', 'rewire'] }
+  : { plugins: ['@babel/proposal-throw-expressions'] };
