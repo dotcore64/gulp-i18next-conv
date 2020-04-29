@@ -10,7 +10,7 @@
     "build": "babel src -d lib -s",
     "cover": "nyc npm test",
     "coveralls": "npm run cover && nyc report --reporter=text-lcov | coveralls",
-    "prepare": "npm run test && npm run build"
+    "prepare": "npm run build && npm test"
   },
   "files": [
     "lib"
