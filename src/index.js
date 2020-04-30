@@ -29,10 +29,10 @@ function getConverter(file, gettextFormat) {
         case 'mo':
           return [i18nextToMo, '.mo'];
         default:
-          throw new Error('Cannot determine which which file to convert to.');
+          throw new PluginError(PLUGIN_NAME, 'Cannot determine which which file to convert to.');
       }
     default:
-      throw new Error('Cannot determine which which file to convert to.');
+      throw new PluginError(PLUGIN_NAME, 'Cannot determine which which file to convert to.');
   }
 }
 
@@ -40,7 +40,7 @@ const getContents = (file, data) => (file.isBuffer() // eslint-disable-line no-n
   ? Buffer.from(data)
   : file.isStream()
     ? through().end(data)
-    : throw new Error('Invalid file'));
+    : throw new PluginError(PLUGIN_NAME, 'Invalid file'));
 
 module.exports = ({
   determineLocale = defDetermineLocale,
@@ -58,7 +58,7 @@ module.exports = ({
   try {
     [converter, ext] = getConverter(file, gettextFormat);
   } catch (err) {
-    return cb(new PluginError(PLUGIN_NAME, err.message));
+    return cb(err);
   }
 
   return asCallback(vinylToString(file, enc)
@@ -68,7 +68,7 @@ module.exports = ({
       try {
         domain = determineLocale(file.relative, contents);
       } catch (e) {
-        return Promise.reject(new Error('determineLocale failed'));
+        return Promise.reject(new PluginError(PLUGIN_NAME, 'determineLocale failed', { showStack: true }));
       }
 
       return converter(domain, contents, options);
@@ -77,8 +77,7 @@ module.exports = ({
       extname: ext,
       contents: getContents(file, data),
     }))
-    .then(() => { this.push(file); })
-    .catch((err) => Promise.reject(new PluginError(PLUGIN_NAME, err.message, { showStack: true }))),
+    .then(() => { this.push(file); }),
   cb);
 });
 module.exports.determineLocale = defDetermineLocale;
