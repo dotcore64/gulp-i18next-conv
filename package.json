@@ -7,7 +7,7 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "lint": "eslint 'src/*.js' 'test/*.js'",
+    "lint": "eslint --cache .",
     "test": "mocha",
     "build": "babel src -d lib -s",
     "cover": "nyc npm test",
