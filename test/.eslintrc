@@ -1,9 +1,0 @@
-{
-  "env": {
-    "mocha": true
-  },
-  "rules": {
-    "no-underscore-dangle": 0,
-    "import/no-extraneous-dependencies": [2, {"devDependencies": true}]
-  }
-}
