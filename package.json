@@ -1,6 +1,6 @@
 {
   "name": "gulp-i18next-conv",
-  "version": "9.1.0",
+  "version": "10.0.0",
   "description": "Gulp plugin to convert gettext .po or .mo files to i18next compatible JSON",
   "main": "lib/index.js",
   "engines": {
