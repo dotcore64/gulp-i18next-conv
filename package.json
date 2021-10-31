@@ -65,6 +65,6 @@
     "vinyl": "^2.2.1"
   },
   "peerDependencies": {
-    "i18next-conv": ">=10.2.0"
+    "i18next-conv": ">=10.0.1"
   }
 }
