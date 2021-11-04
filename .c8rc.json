@@ -1,4 +1,4 @@
 {
   "reporter": "lcovonly",
-  "include": ["./src/*.js"]
+  "exclude": ["./.babelrc.cjs"]
 }
