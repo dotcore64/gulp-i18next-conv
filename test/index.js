@@ -7,6 +7,8 @@ import es from 'event-stream';
 import { expect } from 'chai';
 import { readFileSync } from 'fs';
 
+// https://github.com/import-js/eslint-plugin-import/issues/1649
+// eslint-disable-next-line import/no-unresolved,node/no-missing-import
 import i18next, { __RewireAPI__, determineLocale as defDetermineLocale } from 'gulp-i18next-conv';
 
 const testFile = readFileSync('test/messages.po');

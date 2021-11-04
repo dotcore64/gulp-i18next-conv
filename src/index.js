@@ -42,7 +42,7 @@ const getContents = (file, data) => (file.isBuffer() // eslint-disable-line no-n
     ? through().end(data)
     : throw new PluginError(PLUGIN_NAME, 'Invalid file'));
 
-export const determineLocale = defDetermineLocale;
+export { defDetermineLocale as determineLocale };
 
 export default ({
   determineLocale = defDetermineLocale,
