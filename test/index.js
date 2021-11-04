@@ -1,5 +1,6 @@
 import File from 'vinyl';
 import { PassThrough } from 'stream';
+import { createRequire } from 'module';
 
 import { spy, stub } from 'sinon';
 import { basename } from 'path';
@@ -273,6 +274,15 @@ describe('gulp-i18next-conv', () => {
   describe('named exports', () => {
     it('should correctly determine domain with exported determineLocale', () => {
       expect(defDetermineLocale('foo/bar')).to.equal('foo');
+    });
+  });
+
+  describe('commonjs', () => {
+    it('should successfully require cjs module', () => {
+      const require = createRequire(import.meta.url);
+      const cjs = require('..');
+      expect(cjs.default).to.be.a('function');
+      expect(cjs.determineLocale).to.be.a('function');
     });
   });
 });
