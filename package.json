@@ -37,7 +37,7 @@
     "plugin-error": "^1.0.1",
     "standard-as-callback": "^2.1.0",
     "through2": "^4.0.2",
-    "vinyl-contents-tostring": "^4.0.0"
+    "vinyl-contents-tostring": "^4.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",
