@@ -1,15 +1,13 @@
-const File = require('vinyl');
-const { PassThrough } = require('stream');
+import File from 'vinyl';
+import { PassThrough } from 'stream';
 
-const { spy, stub } = require('sinon');
-const { basename } = require('path');
-const es = require('event-stream');
-const { expect } = require('chai');
-const { readFileSync } = require('fs');
+import { spy, stub } from 'sinon';
+import { basename } from 'path';
+import es from 'event-stream';
+import { expect } from 'chai';
+import { readFileSync } from 'fs';
 
-const i18next = require('..');
-
-const { determineLocale: defDetermineLocale } = i18next;
+import i18next, { __RewireAPI__, determineLocale as defDetermineLocale } from 'gulp-i18next-conv';
 
 const testFile = readFileSync('test/messages.po');
 const expectedJSON = readFileSync('test/messages.json').slice(0, -1);
@@ -219,8 +217,8 @@ describe('gulp-i18next-conv', () => {
 
   describe('options', () => {
     it('should correctly determine domain with the default option', (done) => {
-      const determineLocale = spy(i18next.__GetDependency__('defDetermineLocale'));
-      i18next.__Rewire__('defDetermineLocale', determineLocale);
+      const determineLocale = spy(__RewireAPI__.__GetDependency__('defDetermineLocale'));
+      __RewireAPI__.__Rewire__('defDetermineLocale', determineLocale);
 
       // create the fake file
       const poFile = new File({
@@ -241,7 +239,7 @@ describe('gulp-i18next-conv', () => {
         done();
       }).write(poFile);
 
-      i18next.__ResetDependency__('defDetermineLocale');
+      __RewireAPI__.__ResetDependency__('defDetermineLocale');
     });
 
     it('should use option keyasareference', (done) => {
