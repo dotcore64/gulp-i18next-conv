@@ -42,7 +42,6 @@
   "homepage": "https://github.com/dotcore64/gulp-i18next-conv#readme",
   "dependencies": {
     "plugin-error": "^1.0.1",
-    "standard-as-callback": "^2.1.0",
     "through2": "^4.0.2",
     "vinyl-contents-tostring": "^4.1.1"
   },

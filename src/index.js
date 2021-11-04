@@ -1,9 +1,9 @@
 import { sep, extname } from 'path';
+import { callbackify } from 'util';
 
 import PluginError from 'plugin-error';
 import through from 'through2';
 import vinylToString from 'vinyl-contents-tostring';
-import asCallback from 'standard-as-callback';
 import {
   gettextToI18next,
   i18nextToPo,
@@ -48,10 +48,10 @@ export default ({
   determineLocale = defDetermineLocale,
   gettextFormat = 'po',
   ...options
-} = {}) => through.obj(function (file, enc, cb) {
+} = {}) => through.obj(callbackify(function (file, enc) {
   if (file.isNull()) {
     this.push(file);
-    return cb();
+    return Promise.resolve();
   }
 
   let converter;
@@ -60,10 +60,10 @@ export default ({
   try {
     [converter, ext] = getConverter(file, gettextFormat);
   } catch (err) {
-    return cb(err);
+    return Promise.reject(err);
   }
 
-  return asCallback.default(vinylToString(file, enc)
+  return vinylToString(file, enc)
     .then((contents) => {
       let domain;
 
@@ -79,6 +79,5 @@ export default ({
       extname: ext,
       contents: getContents(file, data),
     }))
-    .then(() => { this.push(file); }),
-  cb);
-});
+    .then(() => { this.push(file); });
+}));
