@@ -1,5 +1,5 @@
+import { builtinModules as builtins } from 'module';
 import babel from '@rollup/plugin-babel';
-import builtins from 'builtin-modules';
 import pkg from './package.json';
 
 const input = 'src/index.js';
