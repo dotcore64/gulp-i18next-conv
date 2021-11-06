@@ -1,15 +1,15 @@
-const { sep, extname } = require('path');
+import { sep, extname } from 'path';
+import { callbackify } from 'util';
 
-const PluginError = require('plugin-error');
-const through = require('through2');
-const vinylToString = require('vinyl-contents-tostring');
-const asCallback = require('standard-as-callback').default;
-const {
+import PluginError from 'plugin-error';
+import through from 'through2';
+import vinylToString from 'vinyl-contents-tostring';
+import {
   gettextToI18next,
   i18nextToPo,
   i18nextToPot,
   i18nextToMo,
-} = require('i18next-conv');
+} from 'i18next-conv';
 
 const PLUGIN_NAME = 'gulp-i18next-conv';
 const defDetermineLocale = (filename) => filename.split(sep)[0];
@@ -42,14 +42,16 @@ const getContents = (file, data) => (file.isBuffer() // eslint-disable-line no-n
     ? through().end(data)
     : throw new PluginError(PLUGIN_NAME, 'Invalid file'));
 
-module.exports = ({
+export { defDetermineLocale as determineLocale };
+
+export default ({
   determineLocale = defDetermineLocale,
   gettextFormat = 'po',
   ...options
-} = {}) => through.obj(function (file, enc, cb) {
+} = {}) => through.obj(callbackify(function (file, enc) {
   if (file.isNull()) {
     this.push(file);
-    return cb();
+    return Promise.resolve();
   }
 
   let converter;
@@ -58,10 +60,10 @@ module.exports = ({
   try {
     [converter, ext] = getConverter(file, gettextFormat);
   } catch (err) {
-    return cb(err);
+    return Promise.reject(err);
   }
 
-  return asCallback(vinylToString(file, enc)
+  return vinylToString(file, enc)
     .then((contents) => {
       let domain;
 
@@ -77,7 +79,5 @@ module.exports = ({
       extname: ext,
       contents: getContents(file, data),
     }))
-    .then(() => { this.push(file); }),
-  cb);
-});
-module.exports.determineLocale = defDetermineLocale;
+    .then(() => { this.push(file); });
+}));
