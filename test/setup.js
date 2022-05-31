@@ -1,7 +1,4 @@
-import { createRequire } from 'node:module';
 import { use } from 'chai';
 
-const require = createRequire(import.meta.url);
-
-use(require('sinon-chai'));
-use(require('dirty-chai'));
+use((await import('sinon-chai')).default); // eslint-disable-line unicorn/no-await-expression-member
+use((await import('dirty-chai')).default); // eslint-disable-line unicorn/no-await-expression-member

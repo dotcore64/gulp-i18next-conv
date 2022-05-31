@@ -1,5 +1,4 @@
 import { PassThrough } from 'node:stream';
-import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
 import { basename } from 'node:path';
 
@@ -274,15 +273,6 @@ describe('gulp-i18next-conv', () => {
   describe('named exports', () => {
     it('should correctly determine domain with exported determineLocale', () => {
       expect(defDetermineLocale('foo/bar')).to.equal('foo');
-    });
-  });
-
-  describe('commonjs', () => {
-    it('should successfully require cjs module', () => {
-      const require = createRequire(import.meta.url);
-      const cjs = require('..');
-      expect(cjs.default).to.be.a('function');
-      expect(cjs.determineLocale).to.be.a('function');
     });
   });
 });
