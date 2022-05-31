@@ -3,8 +3,6 @@
 [![Build Status][build-badge]][build]
 [![npm package][npm-badge]][npm]
 [![Coverage Status][coveralls-badge]][coveralls]
-[![Dependency Status][dependency-status-badge]][dependency-status]
-[![devDependency Status][dev-dependency-status-badge]][dev-dependency-status]
 
 > Convert po files into i18next compatible json files
 
@@ -20,16 +18,16 @@ $ npm install --save-dev i18next-conv gulp-i18next-conv
 If for example you have the following po files: `locale/en/LC_MESSAGES/message.po` and `locale/jp/LC_MESSAGES/messages.po`, then you can produce `locale/en/messages.json` and `locale/jp/messages.json` with the following task:
 
 ```js
-const gulp = require('gulp');
-const i18next = require('gulp-i18next-conv');
+import gulp from 'gulp';
+import i18next from 'gulp-i18next-conv';
 
 gulp.task('locale-build', function() {
   // Backend locales
   return gulp.src('locale/*/LC_MESSAGES/*.po')
-  .pipe(i18next())
-  .pipe(jsonminify())
-  .pipe(rename(path => path.dirname = path.dirname.replace('/LC_MESSAGES', '')))
-  .pipe(gulp.dest('locale'));
+    .pipe(i18next())
+    .pipe(jsonminify())
+    .pipe(rename(path => path.dirname = path.dirname.replace('/LC_MESSAGES', '')))
+    .pipe(gulp.dest('locale'));
 });
 ```
 
@@ -73,9 +71,3 @@ See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
 
 [coveralls-badge]: https://img.shields.io/coveralls/dotcore64/gulp-i18next-conv/master.svg?style=flat-square
 [coveralls]: https://coveralls.io/r/dotcore64/gulp-i18next-conv
-
-[dependency-status-badge]: https://david-dm.org/dotcore64/gulp-i18next-conv.svg?style=flat-square
-[dependency-status]: https://david-dm.org/dotcore64/gulp-i18next-conv
-
-[dev-dependency-status-badge]: https://david-dm.org/dotcore64/gulp-i18next-conv/dev-status.svg?style=flat-square
-[dev-dependency-status]: https://david-dm.org/dotcore64/gulp-i18next-conv#info=devDependencies
