@@ -1,5 +1,5 @@
-import { sep, extname } from 'path';
-import { callbackify } from 'util';
+import { sep, extname } from 'node:path';
+import { callbackify } from 'node:util';
 
 import PluginError from 'plugin-error';
 import through from 'through2';
@@ -59,8 +59,8 @@ export default ({
 
   try {
     [converter, ext] = getConverter(file, gettextFormat);
-  } catch (err) {
-    return Promise.reject(err);
+  } catch (e) {
+    return Promise.reject(e);
   }
 
   return vinylToString(file, enc)
@@ -69,7 +69,7 @@ export default ({
 
       try {
         domain = determineLocale(file.relative, contents);
-      } catch (e) {
+      } catch {
         return Promise.reject(new PluginError(PLUGIN_NAME, 'determineLocale failed', { showStack: true }));
       }
 

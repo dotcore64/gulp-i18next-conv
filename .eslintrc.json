@@ -1,9 +1,14 @@
 {
-  "extends": ["airbnb-base", "plugin:node/recommended"],
-  "plugins": ["node"],
+  "extends": ["airbnb-base", "plugin:n/recommended", "plugin:unicorn/recommended"],
+  "plugins": ["n", "unicorn"],
   "parser": "@babel/eslint-parser",
   "rules": {
-    "func-names": 0
+    "func-names": 0,
+    "unicorn/prevent-abbreviations": 0,
+    "unicorn/no-null": 0,
+    "unicorn/no-nested-ternary": 0,
+    "unicorn/no-useless-promise-resolve-reject": 0,
+    "unicorn/catch-error-name": ["error", { "name": "e" }]
   },
   "overrides": [
     {

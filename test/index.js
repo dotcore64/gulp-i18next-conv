@@ -1,15 +1,15 @@
-import File from 'vinyl';
-import { PassThrough } from 'stream';
-import { createRequire } from 'module';
+import { PassThrough } from 'node:stream';
+import { createRequire } from 'node:module';
+import { readFileSync } from 'node:fs';
+import { basename } from 'node:path';
 
+import File from 'vinyl';
 import { spy, stub } from 'sinon';
-import { basename } from 'path';
 import es from 'event-stream';
 import { expect } from 'chai';
-import { readFileSync } from 'fs';
 
 // https://github.com/import-js/eslint-plugin-import/issues/1649
-// eslint-disable-next-line import/no-unresolved,node/no-missing-import
+// eslint-disable-next-line import/no-unresolved,n/no-missing-import
 import i18next, { __RewireAPI__, determineLocale as defDetermineLocale } from 'gulp-i18next-conv';
 
 const testFile = readFileSync('test/messages.po');

@@ -1,4 +1,4 @@
-import { builtinModules as builtins } from 'module';
+import { builtinModules as builtins } from 'node:module';
 import babel from '@rollup/plugin-babel';
 import pkg from './package.json';
 
