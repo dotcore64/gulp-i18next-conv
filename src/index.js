@@ -65,6 +65,10 @@ export default ({
 
   return vinylToString(file, enc)
     .then((contents) => {
+      if (contents === undefined) {
+        return Promise.reject(new Error('Invalid file'));
+      }
+
       let domain;
 
       try {
