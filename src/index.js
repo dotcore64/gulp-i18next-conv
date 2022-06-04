@@ -36,7 +36,7 @@ function getConverter(file, gettextFormat) {
   }
 }
 
-const getContents = (file, data) => (file.isBuffer() // eslint-disable-line no-nested-ternary
+const getContents = (file, data) => (file.isBuffer()
   ? Buffer.from(data)
   : file.isStream()
     ? through().end(data)
