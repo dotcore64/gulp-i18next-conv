@@ -18,21 +18,28 @@ function getConverter(file, gettextFormat) {
   switch (extname(file.path)) { // file.extname doesn't work in older vinyl used by gulp 3
     case '.po':
     case '.pot':
-    case '.mo':
+    case '.mo': {
       return [gettextToI18next, '.json'];
-    case '.json':
+    }
+    case '.json': {
       switch (gettextFormat) {
-        case 'po':
+        case 'po': {
           return [i18nextToPo, '.po'];
-        case 'pot':
+        }
+        case 'pot': {
           return [i18nextToPot, '.pot'];
-        case 'mo':
+        }
+        case 'mo': {
           return [i18nextToMo, '.mo'];
-        default:
+        }
+        default: {
           throw new PluginError(PLUGIN_NAME, 'Cannot determine which which file to convert to.');
+        }
       }
-    default:
+    }
+    default: {
       throw new PluginError(PLUGIN_NAME, 'Cannot determine which which file to convert to.');
+    }
   }
 }
 
