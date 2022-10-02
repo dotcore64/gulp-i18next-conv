@@ -41,7 +41,7 @@
   "dependencies": {
     "plugin-error": "^2.0.0",
     "through2": "^4.0.2",
-    "vinyl-contents-tostring": "^5.0.0"
+    "vinyl-contents-tostring": "^6.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.19.3",
