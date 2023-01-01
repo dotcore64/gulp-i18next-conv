@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/dotcore64/gulp-i18next-conv#readme",
   "dependencies": {
-    "plugin-error": "^2.0.0",
+    "plugin-error": "^2.0.1",
     "through2": "^4.0.2",
     "vinyl-contents-tostring": "^6.1.0"
   },
