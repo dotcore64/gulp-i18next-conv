@@ -46,7 +46,7 @@
   "devDependencies": {
     "@babel/cli": "^7.21.5",
     "@babel/core": "^7.22.5",
-    "@babel/eslint-parser": "^7.21.8",
+    "@babel/eslint-parser": "^7.22.5",
     "@babel/plugin-proposal-throw-expressions": "^7.22.5",
     "babel-plugin-rewire": "^1.2.0",
     "babel-register-esm": "^1.2.4",
