@@ -48,8 +48,6 @@
     "@babel/core": "^7.22.5",
     "@babel/eslint-parser": "^7.22.5",
     "@babel/plugin-proposal-throw-expressions": "^7.22.5",
-    "babel-plugin-rewire": "^1.2.0",
-    "babel-register-esm": "^1.2.4",
     "c8": "^8.0.0",
     "chai": "^4.3.7",
     "dirty-chai": "^2.0.1",

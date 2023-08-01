@@ -9,7 +9,7 @@ import { expect } from 'chai';
 
 // https://github.com/import-js/eslint-plugin-import/issues/1649
 // eslint-disable-next-line import/no-unresolved
-import i18next, { __RewireAPI__, determineLocale as defDetermineLocale } from 'gulp-i18next-conv';
+import i18next, { determineLocale as defDetermineLocale } from 'gulp-i18next-conv';
 
 const testFile = readFileSync('test/messages.po');
 const expectedJSON = readFileSync('test/messages.json').slice(0, -1);
@@ -219,8 +219,7 @@ describe('gulp-i18next-conv', () => {
 
   describe('options', () => {
     it('should correctly determine domain with the default option', (done) => {
-      const determineLocale = spy(__RewireAPI__.__GetDependency__('defDetermineLocale'));
-      __RewireAPI__.__Rewire__('defDetermineLocale', determineLocale);
+      const determineLocale = spy(defDetermineLocale);
 
       // create the fake file
       const poFile = new File({
@@ -229,7 +228,7 @@ describe('gulp-i18next-conv', () => {
       });
 
       // Create a prefixer plugin stream
-      const converter = i18next();
+      const converter = i18next({ determineLocale });
 
       // wait for the file to come back out
       converter.once('data', (file) => {
@@ -240,8 +239,6 @@ describe('gulp-i18next-conv', () => {
 
         done();
       }).write(poFile);
-
-      __RewireAPI__.__ResetDependency__('defDetermineLocale');
     });
 
     it('should use option keyasareference', (done) => {

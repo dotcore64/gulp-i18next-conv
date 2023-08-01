@@ -1,6 +1,5 @@
 {
   "reporter": "spec",
   "ui": "bdd",
-  "loader": ["babel-register-esm"],
   "require": ["env-test", "./test/setup.js"]
 }
