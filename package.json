@@ -48,7 +48,7 @@
     "@babel/core": "^7.22.9",
     "@babel/eslint-parser": "^7.22.9",
     "@babel/plugin-proposal-throw-expressions": "^7.22.5",
-    "c8": "^8.0.0",
+    "c8": "^8.0.1",
     "chai": "^4.3.7",
     "dirty-chai": "^2.0.1",
     "env-test": "^1.0.0",
