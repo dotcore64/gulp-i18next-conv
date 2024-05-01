@@ -1,5 +1,10 @@
 {
-  "extends": ["airbnb-base", "plugin:n/recommended", "plugin:unicorn/recommended", "plugin:eslint-comments/recommended"],
+  "extends": [
+    "airbnb-base",
+    "plugin:n/recommended",
+    "plugin:unicorn/recommended",
+    "plugin:eslint-comments/recommended"
+  ],
   "plugins": ["n", "unicorn", "eslint-comments"],
   "parser": "@babel/eslint-parser",
   "rules": {
@@ -8,6 +13,8 @@
     "unicorn/no-null": 0,
     "unicorn/no-nested-ternary": 0,
     "unicorn/no-useless-promise-resolve-reject": 0,
+    "unicorn/no-anonymous-default-export": 0,
+    "unicorn/import-style": 0,
     "unicorn/catch-error-name": ["error", { "name": "e" }],
     "eslint-comments/no-unused-disable": "error"
   },
@@ -22,7 +29,7 @@
       "rules": {
         "no-underscore-dangle": 0,
         "mocha/no-mocha-arrows": 0,
-        "import/no-extraneous-dependencies": [2, {"devDependencies": true}]
+        "import/no-extraneous-dependencies": [2, { "devDependencies": true }]
       }
     }
   ]
