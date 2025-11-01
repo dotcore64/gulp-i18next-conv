@@ -15,6 +15,17 @@ jobs:
           - 20.x
           - 22.x
           - 24.x
+        i18next-conv-version:
+          - 14
+          - 15
+          - 16
+        exclude:
+          - node-version: 22.x
+            i18next-conv-version: 14
+          - node-version: 24.x
+            i18next-conv-version: 14
+          - node-version: 24.x
+            i18next-conv-version: 15
 
     steps:
       - uses: actions/checkout@v5
@@ -29,6 +40,9 @@ jobs:
 
       - name: Lint
         run: npm run lint
+
+      - name: Install i18next-conv
+        run: npm install --no-save i18next-conv@${{ matrix.i18next-conv-version }}
 
       - name: Test
         run: npm run cover
