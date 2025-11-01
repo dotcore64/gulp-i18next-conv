@@ -61,7 +61,7 @@
     "eslint-plugin-unicorn": "^56.0.1",
     "event-stream": "^4.0.1",
     "i18next-conv": "^15.1.2",
-    "mocha": "^11.7.3",
+    "mocha": "^11.7.4",
     "sinon": "^21.0.0",
     "sinon-chai": "^4.0.1",
     "vinyl": "^3.0.1"
