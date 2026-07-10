@@ -12,20 +12,20 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 20.x
           - 22.x
           - 24.x
+          - 26.x
         i18next-conv-version:
-          - 14
           - 15
           - 16
+          - 17
         exclude:
-          - node-version: 22.x
-            i18next-conv-version: 14
-          - node-version: 24.x
-            i18next-conv-version: 14
           - node-version: 24.x
             i18next-conv-version: 15
+          - node-version: 26.x
+            i18next-conv-version: 15
+          - node-version: 26.x
+            i18next-conv-version: 16
 
     steps:
       - uses: actions/checkout@v7
