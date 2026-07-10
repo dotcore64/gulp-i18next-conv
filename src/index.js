@@ -57,6 +57,7 @@ export default ({
   ...options
 } = {}) => through.obj(callbackify(function (file, enc) {
   if (file.isNull()) {
+    // eslint-disable-next-line unicorn/no-this-outside-of-class
     this.push(file);
     return Promise.resolve();
   }
@@ -90,5 +91,6 @@ export default ({
       extname: ext,
       contents: getContents(file, data),
     }))
+    // eslint-disable-next-line unicorn/no-this-outside-of-class
     .then(() => { this.push(file); });
 }));
