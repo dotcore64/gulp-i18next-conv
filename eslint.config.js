@@ -4,6 +4,7 @@ import mocha from "eslint-plugin-mocha";
 import imprt from "eslint-plugin-import";
 import unicorn from "eslint-plugin-unicorn";
 import comments from "@eslint-community/eslint-plugin-eslint-comments/configs";
+import prettier from "eslint-plugin-prettier/recommended";
 import babel from "@babel/eslint-parser";
 
 const testFiles = ["test/{,**}/*.?(c)js"];
@@ -14,6 +15,7 @@ export default [
   comments.recommended,
   unicorn.configs.recommended,
   imprt.flatConfigs.recommended,
+  prettier,
   {
     languageOptions: {
       sourceType: "module",
@@ -27,8 +29,8 @@ export default [
       "unicorn/no-useless-promise-resolve-reject": 0,
       "unicorn/no-anonymous-default-export": 0,
       "unicorn/import-style": 0,
-      "unicorn/catch-error-name": ["error", { "name": "e" }],
-      "@eslint-community/eslint-comments/no-unused-disable": "error"
+      "unicorn/catch-error-name": ["error", { name: "e" }],
+      "@eslint-community/eslint-comments/no-unused-disable": "error",
     },
   },
   {
