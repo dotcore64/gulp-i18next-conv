@@ -22,7 +22,7 @@ const expectedMo = readFileSync("test/messages.expected.mo");
 
 describe("gulp-i18next-conv", () => {
   describe("in streaming mode", () => {
-    it("should convert given po file", (done) => {
+    it("should convert given po file", (_, done) => {
       // create the fake file
       const poFile = new File({
         path: "test/messages.po",
@@ -56,7 +56,7 @@ describe("gulp-i18next-conv", () => {
   });
 
   describe("in buffering mode", () => {
-    it("should convert given po file", (done) => {
+    it("should convert given po file", (_, done) => {
       // create the fake file
       const poFile = new File({
         path: "test/messages.po",
@@ -83,7 +83,7 @@ describe("gulp-i18next-conv", () => {
   });
 
   describe("null file", () => {
-    it("should return a null file", (done) => {
+    it("should return a null file", (_, done) => {
       // create the fake file
       const poFile = new File({
         path: "test/messages.po",
@@ -104,7 +104,7 @@ describe("gulp-i18next-conv", () => {
   });
 
   describe("i18next to gettext", () => {
-    it("should convert json to po", (done) => {
+    it("should convert json to po", (_, done) => {
       const jsonFile = new File({
         path: "test/messages.json",
         contents: Buffer.from(expectedJSON),
@@ -122,7 +122,7 @@ describe("gulp-i18next-conv", () => {
       });
     });
 
-    it("should convert json to pot", (done) => {
+    it("should convert json to pot", (_, done) => {
       const jsonFile = new File({
         path: "test/messages.json",
         contents: Buffer.from(expectedJSON),
@@ -141,7 +141,7 @@ describe("gulp-i18next-conv", () => {
       });
     });
 
-    it("should convert json to mo", (done) => {
+    it("should convert json to mo", (_, done) => {
       const jsonFile = new File({
         path: "test/messages.json",
         contents: Buffer.from(expectedJSON),
@@ -162,7 +162,7 @@ describe("gulp-i18next-conv", () => {
   });
 
   describe("errors", () => {
-    it("should throw error on invalid vinyl file", (done) => {
+    it("should throw error on invalid vinyl file", (_, done) => {
       // create the fake file
       const poFile = new File({
         path: "test/messages.po",
@@ -184,7 +184,7 @@ describe("gulp-i18next-conv", () => {
         .write(poFile);
     });
 
-    it("should throw error on non gettext or json file", (done) => {
+    it("should throw error on non gettext or json file", (_, done) => {
       const fooFile = new File({
         path: "test/messages.foo",
         contents: Buffer.from(""),
@@ -201,7 +201,7 @@ describe("gulp-i18next-conv", () => {
         .write(fooFile);
     });
 
-    it("should throw error on non-valid gettextFormat", (done) => {
+    it("should throw error on non-valid gettextFormat", (_, done) => {
       const jsonFile = new File({
         path: "test/messages.json",
         contents: Buffer.from(""),
@@ -218,7 +218,7 @@ describe("gulp-i18next-conv", () => {
         .write(jsonFile);
     });
 
-    it("should throw error if determineLocale fails", (done) => {
+    it("should throw error if determineLocale fails", (_, done) => {
       const jsonFile = new File({
         path: "test/messages.json",
         contents: Buffer.from(""),
@@ -239,7 +239,7 @@ describe("gulp-i18next-conv", () => {
   });
 
   describe("options", () => {
-    it("should correctly determine domain with the default option", (done) => {
+    it("should correctly determine domain with the default option", (_, done) => {
       const determineLocale = spy(defDetermineLocale);
 
       // create the fake file
@@ -264,7 +264,7 @@ describe("gulp-i18next-conv", () => {
         .write(poFile);
     });
 
-    it("should use option keyasareference", (done) => {
+    it("should use option keyasareference", (_, done) => {
       // create the fake file
       const poFile = new File({
         path: "test/messages.po",
