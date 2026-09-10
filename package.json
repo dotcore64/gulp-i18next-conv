@@ -65,7 +65,7 @@
     "eslint-plugin-yml": "^3.6.0",
     "event-stream": "^4.0.1",
     "i18next-conv": "^17.0.0",
-    "prettier": "3.9.5",
+    "prettier": "3.9.6",
     "sinon": "^22.0.0",
     "sinon-chai": "^4.0.1",
     "vinyl": "^3.0.1"
